@@ -1,0 +1,12 @@
+{
+  "name": "@humansignal/extract-antd-no-reset",
+  "version": "0.0.1",
+  "description": "Extract AntD with no CSS reset",
+  "type": "module",
+  "main": "extract-antd-no-reset.mjs",
+  "bin": {
+    "extract-antd-no-reset": "./extract-antd-no-reset.mjs"
+  },
+  "license": "MIT",
+  "dependencies": {}
+}

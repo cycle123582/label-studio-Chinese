@@ -1,0 +1,44 @@
+title: 视频分类
+type: community
+group: 视频
+image: /static/templates/video-classification.png
+details: |
+  <h1>Classify video</h1>
+  <dl>
+    <dt>Industry Applications</dt>
+    <dd>content moderation, sports analysis, medical video analysis, surveillance footage review, entertainment industry, educational content, quality control, social media filtering, broadcast media, security monitoring, autonomous vehicles, drone footage analysis</dd>
+    <dt>Associated Models</dt>
+    <dd>3D CNN, I3D, SlowFast, TSN, TimeSformer, Video Transformer</dd>
+    <dt>Domain Terminology</dt>
+    <dd>action recognition, temporal modeling, video understanding, activity classification, motion recognition</dd>
+  </dl>
+config: |
+  <View>
+    <Video name="video" value="$video"/>
+    <Choices name="choice" toName="video" showInLine="true">
+      <Choice value="Blurry" />
+      <Choice value="Sharp" />
+    </Choices>
+  </View>
+
+  <!-- {
+  "data": {
+     "video": "/static/samples/opossum_snow.mp4"
+  },
+  "annotations": [{"result":
+      [
+          {
+              "value": {
+                  "choices": [
+                      "Blurry"
+                  ]
+              },
+              "id": "vB3U85jSU4",
+              "from_name": "choice",
+              "to_name": "video",
+              "type": "choices"
+          }
+      ]
+    }]
+  }
+  -->

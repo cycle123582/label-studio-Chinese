@@ -1,0 +1,14 @@
+<base href="/storybook/" />
+<script>
+  function handleThemeColor() {
+    let themeColor = window.localStorage.getItem("theme-toggle:prefers-color-scheme");
+    themeColor = themeColor ? JSON.parse(themeColor) : "auto";
+    if (themeColor === "auto") {
+      themeColor = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+    } else if (!themeColor) {
+      themeColor = "light";
+    }
+    document.documentElement.setAttribute("data-color-scheme", themeColor);
+  }
+  handleThemeColor();
+</script>

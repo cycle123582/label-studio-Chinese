@@ -1,0 +1,29 @@
+title: HTML 实体识别
+type: community
+group: 结构化数据解析
+image: /static/templates/html-entity-recognition.png
+details: |
+  <h1>Extract entities from hypertext documents</h1>
+  <dl>
+    <dt>Industry Applications</dt>
+    <dd>web scraping, content extraction, digital publishing, news aggregation, e-commerce data mining, social media monitoring, academic research, market research, competitive intelligence, SEO analysis, content management, data journalism</dd>
+    <dt>Associated Models</dt>
+    <dd>DOM parsing, web content extraction, structured data extraction, HTML parsing</dd>
+    <dt>Domain Terminology</dt>
+    <dd>web entity extraction, HTML annotation, web document processing, hypertext analysis, markup extraction</dd>
+  </dl>
+config: |
+  <View>
+    <HyperTextLabels name="ner" toName="text">
+      <Label value="Title" background="green"/>
+      <Label value="Author" background="blue"/>
+      <Label value="Body" background="yellow"/>
+    </HyperTextLabels>
+
+    <View style="border: 1px solid #CCC;
+                 border-radius: 10px;
+                 padding: 5px">
+      <HyperText name="text" value="$html"/>
+    </View>
+  </View>
+

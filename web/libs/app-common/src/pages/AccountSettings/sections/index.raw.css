@@ -1,0 +1,65 @@
+/* FIXME: mimic tailwind classes until landed */
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.gap-2 {
+  gap:  0.75rem;
+}
+
+.h-6 {
+  height: 1.5rem;
+}
+
+.w-6 {
+  width: 1.5rem;
+}
+
+.min-h-\[90px\] {
+  min-height: 90px;
+}
+
+.inline-flex {
+  display: inline-flex;
+}
+
+.flex-1 {
+  flex: 1
+}
+
+.gap-1 {
+  gap: 0.25rem /* 4px */;
+}
+
+.gap-2 {
+  gap: 0.5rem /* 8px */;
+}
+
+.gap-6 {
+  gap: 1.5rem /* 24px */;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.items-end {
+  align-items: flex-end;
+}
+
+.m-0 {
+  margin: 0
+}

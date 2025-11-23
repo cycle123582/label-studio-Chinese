@@ -1,0 +1,25 @@
+{% extends 'simple.html' %}
+{% load static %}
+
+{% block page_labeling %}
+  <title>500 | Label Studio</title>
+  {{ block.super }}
+{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ settings.HOSTNAME }}{% static 'css/error.css' %}"/>
+{% endblock %}
+
+
+{% block content %}
+<div class="ls-global-error">
+  <img class="ls-global-error__heidi" src="{{ settings.HOSTNAME }}{% static 'images/heidi-500.svg' %}" alt="Heidi's down" draggable="false" />
+  <h1>Uh oh, something went wrong.</h1>
+  <h2>Here’s a few things you can try:</h2>
+  <p class="ls-global-error__actions">
+    <button onClick="history.back()">Go Back</button>
+    <button onClick="location.reload()">Refresh</button>
+    <button onClick="window.location.href='/'" class="ls-global-error__primary_button">Go to Home</button>
+  </p>
+</div>
+{% endblock %}

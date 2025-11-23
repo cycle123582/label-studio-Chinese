@@ -1,0 +1,29 @@
+title: 基于分段的自动语音识别
+type: community
+group: 音频 / 语音处理
+image: /static/templates/automatic-speech-recognition-using-segments.png
+details: |
+  <h1>Segment voice activity and transcribe the audio</h1>
+  <dl>
+    <dt>Industry Applications</dt>
+    <dd>call center transcription, meeting minutes, podcast transcription, lecture recordings, courtroom proceedings, medical dictation, voice assistants, subtitling, accessibility services, broadcast transcription, phone banking, voice search</dd>
+    <dt>Associated Models</dt>
+    <dd>Whisper, Wav2Vec2, DeepSpeech, voice activity detection, WebRTC VAD</dd>
+    <dt>Domain Terminology</dt>
+    <dd>VAD, speech segmentation, speech-to-text, ASR with VAD</dd>
+  </dl>
+config: |
+  <View>
+    <Labels name="labels" toName="audio">
+      <Label value="Speech" />
+      <Label value="Noise" />
+    </Labels>
+
+    <Audio name="audio" value="$audio"/>
+
+    <TextArea name="transcription" toName="audio"
+              rows="2" editable="true"
+              perRegion="true" required="true" />
+  </View>
+
+

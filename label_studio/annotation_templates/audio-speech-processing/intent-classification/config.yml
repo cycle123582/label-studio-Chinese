@@ -1,0 +1,30 @@
+title: 意图分类
+type: community
+group: 音频 / 语音处理
+image: /static/templates/intent-classification.png
+details: |
+  <h1>Do voice activity segmentation and choose spoken intent</h1>
+  <dl>
+    <dt>Industry Applications</dt>
+    <dd>voice assistants, smart speakers, customer service automation, call routing, voice user interfaces, chatbots, IVR systems, automotive voice control, smart home devices, mobile voice apps, healthcare voice interfaces, banking voice systems</dd>
+    <dt>Associated Models</dt>
+    <dd>spoken language understanding, end-to-end speech intent, speech-to-intent, voice command classification</dd>
+    <dt>Domain Terminology</dt>
+    <dd>voice intent, spoken intent recognition, conversational AI, voice user experience, speech NLU</dd>
+  </dl>
+config: |
+  <View>
+    <Labels name="labels" toName="audio">
+      <Label value="Segment" />
+    </Labels>
+
+    <Audio name="audio" value="$audio"/>
+
+    <Choices name="intent" toName="audio" perRegion="true" required="true">
+      <Choice value="Question" />
+      <Choice value="Request" />
+      <Choice value="Satisfied" />
+      <Choice value="Interested" />
+      <Choice value="Unsatisfied" />
+    </Choices>
+  </View>

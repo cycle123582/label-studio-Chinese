@@ -1,0 +1,30 @@
+title: 内容审核
+type: community
+group: 自然语言处理
+image: /static/templates/content-moderation.png
+details: |
+  <h1>Content moderation</h1>
+  <dl>
+    <dt>Industry Applications</dt>
+    <dd>social media platforms, online communities, forum moderation, chat moderation, user-generated content, comment filtering, gaming chat, livestream chat, trust and safety, content policy, community guidelines, child safety, hate speech detection, harassment detection, cyberbullying, disinformation, automated moderation, human-in-the-loop</dd>
+    <dt>Domain Terminology</dt>
+    <dd>NLP, toxic content detection, profanity filtering</dd>
+  </dl>
+config: |
+  <View>
+    <Text name="text" value="$text"/>
+
+    <Choices name="content_moderation" toName="text" choice="multiple" showInline="false">
+      <Choice value="Toxic" background="red"/>
+      <Choice value="Severely Toxic" background="brown"/>
+      <Choice value="Obscene" background="green"/>
+      <Choice value="Threat" background="blue"/>
+      <Choice value="Insult" background="orange"/>
+      <Choice value="Hate" background="grey"/>
+    </Choices>
+
+    <View style="margin: var(--spacing-tight); box-shadow: 0 4px 8px rgba(var(--color-neutral-shadow-raw) / 10%); padding: var(--spacing-tight) var(--spacing-base); border-radius: var(--corner-radius-small); background-color: var(--color-neutral-background); border: 1px solid var(--color-neutral-border);">
+      <Header value="Please provide additional comments"/>
+      <TextArea name="comments" toName="text" required="false"/>
+    </View>
+  </View>

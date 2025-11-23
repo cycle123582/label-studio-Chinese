@@ -1,0 +1,26 @@
+title: 带边界框的医学图像分类
+type: community
+group: 计算机视觉
+image: /static/templates/medical-image-classification.png
+details: |
+  <h1>Classify medical images and draw regions</h1>
+  <dl>
+    <dt>Industry Applications</dt>
+    <dd>radiology, pathology, oncology, diagnostic imaging, medical diagnosis, clinical decision support, medical AI, healthcare AI, X-ray, CT scan, MRI, ultrasound, mammography, histopathology, digital pathology, medical imaging, radiological imaging, cancer detection, tumor segmentation, lesion detection, abnormality detection, screening programs, early detection, medical screening</dd>
+    <dt>Domain Terminology</dt>
+    <dd>FDA approval, medical device, clinical validation, regulatory submission, HIPAA compliance, medical data, patient privacy</dd>
+  </dl>
+config: |
+  <View>
+    <Image name="image" value="$image"/>
+
+    <RectangleLabels name="label" toName="image">
+      <Label value="Tumor" background="green"/>
+    </RectangleLabels>
+
+    <Choices name="classification" toName="image">
+      <Choice value="Benign"/>
+      <Choice value="Malignant"/>
+      <Choice value="Normal"/>
+    </Choices>
+  </View>

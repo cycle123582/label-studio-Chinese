@@ -1,0 +1,34 @@
+title: 关系抽取
+type: community
+group: 自然语言处理
+order: 5
+image: /static/templates/relation-extraction.png
+details: |
+  <h1>Predict attributes and relations for entities in a sentence</h1>
+  <dl>
+    <dt>Industry Applications</dt>
+    <dd>knowledge base construction, biomedical literature mining, financial entity relationships, legal document analysis, news event extraction, corporate intelligence, supply chain mapping, scientific paper analysis, patent mining, social network analysis, genealogy research, business intelligence</dd>
+    <dt>Associated Models</dt>
+    <dd>distant supervision, joint extraction, transformer models, graph neural networks</dd>
+    <dt>Domain Terminology</dt>
+    <dd>NLP, entity linking, knowledge graph construction, semantic relationships, structured information extraction</dd>
+  </dl>
+config: |
+  <View>
+     <Relations>
+      <Relation value="org:founded_by"/>
+      <Relation value="org:founded"/>
+    </Relations>
+    <Labels name="label" toName="text">
+      <Label value="Organization" background="orange"/>
+      <Label value="Person" background="green"/>
+      <Label value="Datetime" background="blue"/>
+    </Labels>
+
+    <Text name="text" value="$text"/>
+  </View>
+
+  <!-- {"data": {
+    "text": "Microsoft was founded by Bill Gates and Paul Allen on April 4, 1975, to develop and sell BASIC interpreters for the Altair 8800."
+  }} -->
+

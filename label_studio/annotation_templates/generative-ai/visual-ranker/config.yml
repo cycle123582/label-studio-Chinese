@@ -1,0 +1,71 @@
+title: 视觉排序器
+type: community
+group: 生成式人工智能
+order: 5
+image: /static/templates/visual-ranker.png
+details: |
+  <h1>Rank and compare AI-generated visual content</h1>
+  <dl>
+    <dt>Industry Applications</dt>
+    <dd>AI image generation evaluation, creative AI assessment, generative art evaluation, marketing content creation, e-commerce product imagery, advertising creative, social media content, design iteration, brand asset generation, visual content optimization, creative workflow, art direction</dd>
+    <dt>Associated Models</dt>
+    <dd>DALL-E, Midjourney, Stable Diffusion, Firefly, generative adversarial networks</dd>
+    <dt>Domain Terminology</dt>
+    <dd>gen AI, visual quality ranking, image generation comparison, creative AI evaluation, aesthetic assessment, visual preference modeling</dd>
+  </dl>
+config: |
+  <View>
+        <Style>
+          .product-panel {
+            display: flex;
+            align-items: center;
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f8f8f8;
+            font-size: 1.3em;
+            transition: transform .2s; 
+            color: #333;
+          }
+        
+          .product-panel:hover {
+            transform: scale(1.01);
+          }
+          .htx-ranker-item { padding: 0; border: 0; align-self: center; }
+          .htx-ranker-item img { width: 100%; }
+          .htx-ranker-item [class^=itemLine]:last-child { display: none }
+        </Style>
+  
+     <View className="product-panel">
+        <Text name="prompt" value="$prompt"/>
+      </View>
+      <View>
+        <List name="generated_images" value="$images" title="Generated Images" />
+        <Ranker name="rank" toName="generated_images">
+    </Ranker> 
+      </View>
+    </View>
+    <!-- { 
+        "data": {
+            "prompt": "Generate a high-quality image of a stylish, ergonomic chair for a home office. The chair should have a modern design and be upholstered in forest green fabric. It should be set against a contrasting, simple, stark white background to make the product stand out. The lighting should be soft and evenly distributed, and the focus should be sharp to emphasize the details of the chair's design.",
+            "images": [
+                {
+                    "id": "chair_1",
+                    "html": "<img src='/static/samples/chairs/chair1.png'/>"
+                },
+                  {
+                    "id": "chair_2",
+                    "html": "<img src='/static/samples/chairs/chair2.png'/>"
+                },
+                  {
+                    "id": "chair_3",
+                    "html": "<img src='/static/samples/chairs/chair3.png'/>"
+                },
+                  {
+                    "id": "chair_4",
+                    "html": "<img src='/static/samples/chairs/chair4.png'/>"
+                }
+            ]
+        }
+    } -->
+

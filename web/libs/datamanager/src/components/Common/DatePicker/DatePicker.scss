@@ -1,0 +1,33 @@
+.datepicker {
+  &__output {
+    width: 100%;
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-auto-flow: column;
+    padding-right: 0;
+
+    .input-dm {
+      min-width: 110px;
+      text-align: center;
+    }
+
+    &_range {
+      grid-auto-columns: 1fr min-content 1fr;
+    }
+  }
+
+  &__separator {
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  &__wrapper {
+    background-color: transparent;
+
+    > div {
+      display: flex;
+      background-color: transparent;
+    }
+  }
+}

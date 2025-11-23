@@ -1,0 +1,24 @@
+title: 表格数据
+type: community
+group: 结构化数据解析
+image: /static/templates/tabular-data.png
+details: |
+  <h1>Annotate data in tables</h1>
+  <dl>
+    <dt>Industry Applications</dt>
+    <dd>data validation, spreadsheet processing, database annotation, financial reporting, inventory management, survey data analysis, research data collection, business intelligence, data quality assessment, structured data extraction, regulatory compliance, audit preparation</dd>
+    <dt>Associated Models</dt>
+    <dd>tabular neural networks, XGBoost, random forest, gradient boosting, deep learning for tabular data</dd>
+    <dt>Domain Terminology</dt>
+    <dd>CSV, Excel, XLS, Sheet, data table, spreadsheet analysis, data validation, structured data</dd>
+  </dl>
+config: |
+  <View>
+      <Header value="Table with {key: value} pairs"/>
+      <Table name="table" value="$item"/>
+      <Choices name="choice" toName="table">
+          <Choice value="Correct"/>
+          <Choice value="Incorrect"/>
+      </Choices>
+  </View>
+

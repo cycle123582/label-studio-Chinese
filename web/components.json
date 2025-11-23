@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "default",
+  "rsc": false,
+  "tsx": true,
+  "tailwind": {
+    "config": "libs/ui/src/tailwind.config.js",
+    "css": "libs/ui/src/tailwind.css",
+    "baseColor": "slate",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "aliases": {
+    "components": "@humansignal/shad/components",
+    "ui": "@humansignal/shad/components/ui",
+    "utils": "@humansignal/shad/utils",
+    "lib": "@humansignal/shad/lib",
+    "hooks": "@humansignal/shad/hooks"
+  },
+  "iconLibrary": "lucide"
+}

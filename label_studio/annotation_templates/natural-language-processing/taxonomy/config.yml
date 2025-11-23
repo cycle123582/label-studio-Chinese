@@ -1,0 +1,29 @@
+title: 分类法
+type: community
+group: 自然语言处理
+order: 4
+image: /static/templates/taxonomy.png
+details: |
+  <h1>Multilabel hierarchical classification</h1>
+  <dl>
+    <dt>Industry Applications</dt>
+    <dd>product categorization, content organization, scientific classification, library science, e-commerce tagging, knowledge management, information architecture, data governance, research classification, regulatory taxonomy, medical coding</dd>
+    <dt>Associated Models</dt>
+    <dd>hierarchical classification, multi-label classification, ontology mapping, knowledge graphs</dd>
+    <dt>Domain Terminology</dt>
+    <dd>NLP, category management, structured vocabularies, controlled vocabularies, classification schemes</dd>
+  </dl>
+config: |
+  <View>
+    <Text name="text" value="$text"/>
+    <Taxonomy name="taxonomy" toName="text">
+      <Choice value="Archaea" />
+      <Choice value="Bacteria" />
+      <Choice value="Eukarya">
+        <Choice value="Human" />
+        <Choice value="Oppossum" />
+        <Choice value="Extraterrestial" />
+      </Choice>
+    </Taxonomy>
+  </View>
+

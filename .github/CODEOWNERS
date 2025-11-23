@@ -1,0 +1,20 @@
+.github/                                    @HumanSignal/devops
+deploy/                                     @HumanSignal/devops
+Dockerfile*                                 @HumanSignal/devops
+docker-compose*                             @HumanSignal/devops
+docs/.npmignore                             @hlomzik @nick-skriabin
+docs/package.json                           @hlomzik @nick-skriabin
+docs/yarn.lock                              @hlomzik @nick-skriabin
+web/libs/editor                             @hlomzik @nick-skriabin
+web/tools                                   @HumanSignal/fine-tuners
+web/libs/datamanager                        @HumanSignal/fine-tuners
+web/design-tokens.json                      @HumanSignal/fine-tuners
+web/libs/ui/**/tokens*                      @HumanSignal/fine-tuners
+web/**/tailwind*                            @HumanSignal/fine-tuners
+web/libs/editor/**/Audio*                   @HumanSignal/fine-tuners
+web/libs/editor/**/Video*                   @HumanSignal/fine-tuners
+web/libs/editor/**/TimeSeries*              @HumanSignal/fine-tuners
+web/apps/labelstudio/src/pages/DataManager  @HumanSignal/fine-tuners
+label_studio/data_manager                   @HumanSignal/fine-tuners
+web/apps/playground                         @HumanSignal/fine-tuners
+label_studio/**/migrations/*.py             @HumanSignal/team-root

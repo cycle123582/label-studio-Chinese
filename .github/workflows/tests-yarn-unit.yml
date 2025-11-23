@@ -1,0 +1,63 @@
+name: "yarn unit"
+
+on:
+  workflow_call:
+    inputs:
+      head_sha:
+        required: true
+        type: string
+
+env:
+  NODE: "22"
+  FRONTEND_MONOREPO_DIR: "web"
+
+jobs:
+  main:
+    name: "yarn unit"
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: hmarr/debug-action@v3.0.0
+
+      - name: Configure git
+        shell: bash
+        run: |
+          set -xeuo pipefail
+          git config --global user.name 'robot-ci-heartex'
+          git config --global user.email 'robot-ci-heartex@users.noreply.github.com'
+
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.ref }}
+
+      - name: Setup frontend environment
+        uses: ./.github/actions/setup-frontend-environment
+        with:
+          node-version: "${{ env.NODE }}"
+          directory: "${{ env.FRONTEND_MONOREPO_DIR }}"
+
+      - name: Run tests
+        working-directory: ${{ env.FRONTEND_MONOREPO_DIR }}
+        env:
+          NODE_ENV: "development"
+        run: |
+          yarn test:unit:coverage
+
+      - name: Upload coverage to Codecov
+        if: ${{ always() && github.event.pull_request.head.repo.fork == false && github.event.pull_request.user.login != 'dependabot[bot]' }}
+        uses: codecov/codecov-action@v5
+        with:
+          name: lsf-unit
+          flags: lsf-unit
+          directory: web/coverage
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true
+          fail_ci_if_error: true
+
+      - name: Upload coverage
+        uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: unit coverage
+          path: web/coverage

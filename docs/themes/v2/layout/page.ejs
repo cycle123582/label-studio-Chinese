@@ -1,0 +1,115 @@
+<% const isEnterpriseTheme=theme.tier==="enterprise" %>
+<% const tocPageTypes = page.type === "guide" || page.type === "blog" || page.type === "templates" || page.type === "tags" || page.type === "plugins" || page.tutorial %>
+
+<% const formattedContent=removeContent(page.content) %>
+<% const tocContent=replaceContent(formattedContent) %>
+<% const pageHasHeading=/<h[1-6]\b[^>]*>/i.test(formattedContent); %>
+<% const showToc=tocPageTypes && pageHasHeading %>
+
+<div class="content-grid">
+  <div class="content-markdown">
+    <% if(page.type && page.parent !==undefined) { %>
+      <%- breadcrumb({pageType: page.type, parentPage: isEnterpriseTheme && page.parent_enterprise ? page.parent_enterprise : page.parent, currentPage: page.title, parentPageExtension: page.parent_page_extension }) %>
+   <% } %>
+   <% if (!page.hide_frontmatter_title && page.title.trim()) { %>
+      <%- partial("component/heading", {text: page.title, size: "XLarge", tag: "h1", customClass: "home-page-title"}) %>
+   <% } %>
+   <% if (page.open_in_collab && page.ipynb_repo_path) { %>
+      <div class="open-in-collab-header">
+        <a target="_blank"
+          href="https://colab.research.google.com/github/humansignal/awesome-label-studio-tutorials/blob/main/<%= page.ipynb_repo_path %>">
+          <img src="https://colab.research.google.com/assets/colab-badge.svg"
+            alt="Open In Colab" />
+        </a>
+      </div>
+   <% } %>
+   <% if (page.community || page.tutorial) { %>
+      <div class="community-header">
+          <% if (page.community) { %>
+            <span class="community-badge">Community</span>
+          <% } else if (page.tutorial) { %>
+            <span class="community-badge">Tutorial</span>
+          <% } %>
+        <div class="template-author">
+          <% if (page.community_author) { %>
+            <div class="community-people">
+              <a href="https://github.com/<%= page.community_author %>" target="_blank" class="person author">
+                <% if (file_exists(`../../../source/images/github/avatars/${page.community_author}.png`)) { %>
+                  <img src="/images/github/avatars/<%= page.community_author %>.png" alt="<%= page.community_author %>" class="person-avatar" />
+                <% } else { %>
+                  <span class="avatar-letter" aria-label="<%= page.community_author %>"><%= page.community_author.charAt(0).toUpperCase() %></span>
+                <% } %>
+                <span class="person-name">@<%= page.community_author %></span>
+              </a>
+              
+              <% if (page.community_contributors && page.community_contributors.length > 0) { %>
+                <% 
+                  let contributors = page.community_contributors.split(', ');
+                  // Display all contributors up to 3
+                  let maxContributors = 3;
+                  let displayContributors = contributors.slice(0, maxContributors);
+                  let remainingCount = Math.max(0, contributors.length - maxContributors);
+                %>
+                
+                <span class="people-divider">with</span>
+                
+                <% displayContributors.forEach(function(contributor, index) { %>
+                  <a href="https://github.com/<%= contributor %>" target="_blank" class="person">
+                    <% if (file_exists(`../../../source/images/github/avatars/${contributor}.png`)) { %>
+                      <img src="/images/github/avatars/<%= contributor %>.png" alt="<%= contributor %>" class="person-avatar" />
+                    <% } else { %>
+                      <span class="avatar-letter" aria-label="<%= contributor %>"><%= contributor.charAt(0).toUpperCase() %></span>
+                    <% } %>
+                    <span class="person-name">@<%= contributor %></span>
+                  </a>
+                <% }); %>
+                
+                <% if (remainingCount > 0) { %>
+                  <span class="person-more">+<%= remainingCount %></span>
+                <% } %>
+              <% } %>
+            </div>
+          <% } %>
+          <div class="repo-links">
+            <a href="<%= page.report_bug_url %>" target="_blank" class="issue-icon" title="Report an issue">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm9 3a1 1 0 11-2 0 1 1 0 012 0zm-.25-6.25a.75.75 0 00-1.5 0v3.5a.75.75 0 001.5 0v-3.5z"></path></svg>
+            </a>
+            <a href="<%= page.repo_url %>" target="_blank" class="github-icon" title="View on GitHub">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+   <% } %>
+    <%- formattedContent %>
+    <% if (page.community) { %>
+      <div class="community-footer">
+        <div class="community-footer-content">
+          <svg width="18" height="18" viewBox="0 0 16 16" class="community-footer-icon" fill="var(--color-blue-400)">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+          </svg>
+          <div class="community-footer-text">
+            This template comes from <a href="https://github.com/humanSignal/awesome-label-studio-config" target="_blank">awesome-label-studio-config</a>. Got improvements? Submit a pull request or create your own labeling template!
+          </div>
+        </div>
+      </div>
+   <% } %>
+  </div>
+  <div class="page-rightsidebar">
+    <% if (showToc) { %>
+      <div class="toc">
+        <%- partial("component/text", {text: "In this article", tag: "h3", size: "Eyebrow"}) %>
+        <%- tableOfContent(tocContent, {max_depth: 3}) %>
+      </div>
+    <% } %>
+    <div class="toc-enterprise-cta">
+      <% if(isEnterpriseTheme) { %>
+        <span class="toc-enterprise-cta-copy">Designed for teams of all sizes</span>
+        <%- partial("component/button", { url: "https://humansignal.com/contact-sales", label: "Contact Sales", theme: "Tertiary" }) %>
+      <% } else { %>
+        <span class="toc-enterprise-cta-copy">Designed for teams of all sizes</span>
+        <%- partial("component/button", { url: "https://humansignal.com/pricing", label: "Compare Versions", theme: "Tertiary" }) %>
+      <% } %>
+    </div>
+  </div>
+</div>

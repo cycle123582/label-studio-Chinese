@@ -1,0 +1,51 @@
+{% load static %}
+{% load i18n %}
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content=""/>
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, shrink-to-fit=no">
+
+  <!-- Address string color -->
+  <meta name="theme-color" content="#272727"> <!-- Chrome, Firefox OS and Opera -->
+  <meta name="msapplication-navbutton-color" content="#272727">  <!-- Windows Phone -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="#272727">  <!-- iOS Safari -->
+
+  <link href="{{settings.HOSTNAME}}{% static 'css/main.css' %}" rel="stylesheet"/>
+  {% block app-css %}
+    <link href="{{settings.FRONTEND_HOSTNAME}}/react-app/main.css?v={{ versions.backend.commit }}" rel="stylesheet">
+  {% endblock %}
+
+
+  {% block page_labeling %}
+    <title>Label Studio</title>
+    <link href="{{settings.HOSTNAME}}{% static 'images/favicon.ico' %}" rel="shortcut icon"/>
+  {% endblock %}
+
+  {% block head %}
+  {% endblock %}
+
+  {% block theme_colors %}
+    <script>
+      function handleThemeColor() {
+        let themeColor = window.localStorage.getItem("preferred-color-scheme");
+        if (themeColor === "Auto") {
+          themeColor = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "Dark" : "Light"
+        } else if (!themeColor) {
+          themeColor = "Light";
+        }
+        document.documentElement.setAttribute("data-color-scheme", themeColor.toLowerCase());
+      }
+      handleThemeColor();
+    </script>
+  {% endblock %}
+</head>
+
+<body>
+{% block content %}
+{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+.auto-accept {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  background-color: var(--color-neutral-background);
+  margin-left: 16px;
+
+  &__wrapper {
+    width: 100%;
+
+    &_loading {
+      opacity: 0.5;
+    }
+  }
+
+  &__info {
+    font-size: 16px;
+  }
+
+  &__action {
+    margin: 2px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    background-color: var(--color-neutral-surface);
+    padding: var(--spacing-tightest);
+    transition: all 150ms ease-out;
+
+    &_type {
+      &_accept {
+        border: 1px solid var(--color-positive-border);
+        background-color: var(--color-positive-surface);
+        color: var(--color-positive-surface-content);
+
+        &:hover {
+          background-color: var(--color-positive-surface-hover);
+        }
+
+        & svg {
+          width: 20px;
+          height: 20px;
+        }
+      }
+
+      &_reject {
+        border: 1px solid var(--color-negative-border);
+        background-color: var(--color-negative-surface);
+        color: var(--color-negative-surface-content);
+
+        &:hover {
+          background-color: var(--color-negative-surface-hover);
+        }
+
+        & svg {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+  }
+
+  &__spinner {
+    width: 16px;
+    height: 16px;
+    border-radius: 100%;
+    box-sizing: border-box;
+    border: 2px solid var(--persimmon_400);
+    border-right-color: transparent;
+    animation: waiting-spin 1s linear infinite;
+  }
+}
+
+@keyframes waiting-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

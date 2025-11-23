@@ -1,0 +1,49 @@
+.input {
+  border: 0 none;
+  padding: 0;
+  display: inline;
+  width: 100%;
+  cursor: pointer;
+  outline: none;
+}
+
+.input::file-selector-button {
+  visibility: hidden;
+  width: 0;
+}
+
+.labelContent {
+  border: 1px solid var(--color-primary-border);
+  color: var(--color-primary-content);
+  border-radius: var(--corner-radius-smaller);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-tight);
+  transition: all 150ms ease-out;
+  outline: none;
+  flex-shrink: 0;
+}
+
+.inputWrapper {
+  display: flex;
+  width: auto;
+  height: 42px;
+  margin: 0;
+  cursor: pointer;
+  align-items: center;
+  outline: none;
+
+  & input::before {
+    visibility: hidden;
+  }
+
+  & .labelContent:hover {
+    color: var(--color-primary-surface-hover);
+    background-color: var(--color-primary-emphasis-subtle);
+  }
+
+  &:focus-within .labelContent {
+    box-shadow: 0 0 0 4px var(--color-primary-surface-content-subtle);
+  }
+}

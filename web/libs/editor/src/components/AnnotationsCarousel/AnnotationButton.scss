@@ -1,0 +1,200 @@
+.annotation-button {
+  display: flex;
+  padding: var(--spacing-tighter) var(--spacing-tight);
+  border-radius: var(--corner-radius-small) var(--corner-radius-small) 0 0;
+  border-width: 1px 1px 0;
+  border-style: solid;
+  background-color: var(--color-neutral-surface);
+  margin-top: var(--spacing-tightest);
+  align-items: flex-start;
+  gap: var(--spacing-base);
+  cursor: pointer;
+  height: calc(100% - 3px);
+  min-width: 186px;
+  border-color: var(--color-neutral-border);
+  transition: all 150ms ease-out;
+
+  &__user {
+    line-height: 16px;
+    height: 16px;
+  }
+
+  &__main {
+    flex: 1 0 auto;
+  }
+
+  &__mainSection {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-tight);
+    flex: 1 0 auto;
+
+    & .annotation-button__userpic_prediction {
+      background-color: var(--color-accent-plum-subtle);
+      color: var(--color-accent-plum-bold);
+    }
+  }
+
+  &__name {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0.4px;
+    text-align: left;
+    color: var(--color-neutral-content-subtle);
+  }
+
+  &__entity-id {
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0.4px;
+    text-align: left;
+    color: var(--color-neutral-content-subtler);
+    margin-left: 8px;
+  }
+
+  &__info {
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0.4px;
+    text-align: left;
+    color: var(--color-neutral-content-subtler);
+  }
+
+  &:hover {
+    background-color: var(--color-primary-emphasis-subtle);
+    border-color: var(--color-primary-border-subtler);
+    border-bottom-color: transparent;
+
+    & .annotation-button__name {
+      color: var(--color-neutral-content);
+    }
+
+    & .annotation-button__created {
+      color: var(--color-neutral-content);
+    }
+
+    & .annotation-button__trigger {
+      opacity: 1;
+    }
+    
+    & .annotation-button__picSection {
+      opacity: 1;
+    }
+  }
+
+  &_selected {
+    background-color: var(--color-neutral-background);
+    border-color: var(--color-neutral-border);
+    transform: translate(0, 1px);
+    margin-top: 1px;
+    height: calc(100% - 2px);
+    box-shadow: inset 0 4px 2px 0 var(--color-neutral-background), 0 4px 2px 0 rgba(var(--color-neutral-shadow-raw) / 20%);
+
+    & .annotation-button__picSection {
+      opacity: 1;
+    }
+
+    &:hover {
+      cursor: default;
+      background-color: var(--color-neutral-background);
+      border-color: var(--color-neutral-border);
+    }
+
+    & .annotation-button__trigger {
+      opacity: 1;
+    }
+
+    & .annotation-button__created {
+      color: var(--color-neutral-content);
+    }
+
+    & .annotation-button__name {
+      color: var(--color-neutral-content);
+    }
+  }
+
+  &__icons {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__icon {
+    display: flex;
+    border-radius: 4px;
+
+    &_groundTruth {
+      color: var(--canteloupe_400);
+    }
+  }
+
+  &__trigger {
+    --trigger-border-color: transparent;
+
+    transform: rotate(90deg);
+    display: flex;
+    border-radius: 4px;
+    color: var(--color-neutral-content-subtler);
+    opacity: 0;
+    padding: var(--spacing-tighter);
+    border: 1px solid var(--trigger-border-color);
+    transition: opacity 150ms ease-out, background-color 150ms ease-out;
+
+    svg {
+      width: 20px;
+      height: 20px;
+      transform-origin: center;
+      transform: rotate(90deg);
+    }
+
+    &:hover {
+      cursor: pointer;
+      color: var(--color-neutral-content);
+      background: var(--color-primary-emphasis);
+
+      svg {
+        color: var(--color-neutral-content);
+      }
+    }
+  }
+
+  &__picSection {
+    position: relative;
+    opacity: 0.7;
+    transition: opacity 150ms ease-out;
+  }
+
+  &__status {
+    position: absolute;
+    top: 15px;
+    left: calc(50% + 5px);
+    border-radius: 4px;
+    color: var(--color-neutral-background);
+    border: 2px solid var(--color-neutral-border);
+    display: flex;
+    width: 10px;
+    height: 10px;
+    box-sizing: content-box;
+    align-items: center;
+    justify-content: center;
+
+    &_approved {
+      background-color: var(--color-positive-content);
+    }
+
+    &_skipped {
+      background-color: var(--color-negative-content);
+    }
+
+    &_updated {
+      background-color: var(--color-primary-content);
+
+      svg {
+        display: block;
+      }
+    }
+  }
+}

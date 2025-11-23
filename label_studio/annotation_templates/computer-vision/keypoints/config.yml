@@ -1,0 +1,23 @@
+title: 关键点标注
+type: community
+group: 计算机视觉
+order: 10000
+image: /static/templates/keypoints.png
+details: |
+  <h1>Add labeled keypoints</h1>
+  <dl>
+    <dt>Industry Applications</dt>
+    <dd>human pose estimation, facial landmark detection, sports performance analysis, medical diagnosis, augmented reality, motion capture, fitness tracking, gesture recognition, automotive safety, driver monitoring, biometric authentication, animation industry</dd>
+    <dt>Associated Models</dt>
+    <dd>OpenPose, MediaPipe, PoseNet, DensePose, Face++, Dlib</dd>
+    <dt>Domain Terminology</dt>
+    <dd>anatomical landmarks, joint detection, skeletal tracking, facial keypoints, body pose analysis</dd>
+  </dl>
+config: |
+  <View>
+    <KeyPointLabels name="kp-1" toName="img-1">
+      <Label value="Face" background="red" />
+      <Label value="Nose" background="green" />
+    </KeyPointLabels>
+    <Image name="img-1" value="$img" />
+  </View>

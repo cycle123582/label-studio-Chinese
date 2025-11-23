@@ -1,0 +1,35 @@
+title: 文本分类
+type: community
+group: 自然语言处理
+order: 2
+image: /static/templates/text-classification.png
+details: |
+  <h1>Classify text document</h1>
+  <dl>
+    <dt>Industry Applications</dt>
+    <dd>social media monitoring, customer feedback analysis, product reviews, brand sentiment tracking, market research, political sentiment, news sentiment, e-commerce reviews, customer satisfaction, social listening, reputation management, survey analysis</dd>
+    <dt>Associated Models</dt>
+    <dd>BERT, RoBERTa, DistilBERT, Support Vector Machine, Naive Bayes, XGBoost</dd>
+    <dt>Domain Terminology</dt>
+    <dd>NLP, sentiment analysis, opinion mining, brand monitoring, emotion detection, review analysis</dd>
+  </dl>
+config: |
+  <View>
+    <Text name="text" value="$text"/>
+    <View style="box-shadow: 2px 2px 5px #999;
+                 padding: 20px; margin-top: 2em;
+                 border-radius: 5px;">
+      <Header value="Choose text sentiment"/>
+      <Choices name="sentiment" toName="text"
+               choice="single" showInLine="true">
+        <Choice value="Positive"/>
+        <Choice value="Negative"/>
+        <Choice value="Neutral"/>
+      </Choices>
+    </View>
+  </View>
+
+  <!-- {
+    "data": {"text": "This is a great 3D movie that delivers everything almost right in your face."}
+  } -->
+

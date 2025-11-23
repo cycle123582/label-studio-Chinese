@@ -1,0 +1,27 @@
+{
+  "name": "@humansignal/datamanager",
+  "version": "0.0.0",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "chroma-js": "^2.1.1",
+    "date-fns": "^2.20.1",
+    "deep-equal": "^2.0.5",
+    "js-base64": "^3.7.7",
+    "mobx": "^5.15.4",
+    "mobx-react": "^6",
+    "mobx-react-lite": "2.2.2",
+    "mobx-state-tree": "^3.16.0",
+    "nanoid": "^3.3.8",
+    "pako": "^2.1.0",
+    "react": "18.3.1",
+    "react-beautiful-dnd": "^13.1.1",
+    "react-datepicker": "^3.6.0",
+    "react-dom": "18.3.1",
+    "react-hotkeys-hook": "^2.4.0",
+    "react-virtualized-auto-sizer": "^1.0.20",
+    "react-window": "^1.8.9",
+    "react-window-infinite-loader": "^1.0.5"
+  },
+  "main": "src/index.js"
+}

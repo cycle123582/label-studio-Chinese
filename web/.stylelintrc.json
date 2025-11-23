@@ -1,0 +1,17 @@
+{
+  "extends": ["stylelint-config-tailwindcss/scss", "stylelint-config-standard-scss"],
+  "rules": {
+    "selector-class-pattern": null,
+    "custom-property-pattern": null,
+    "no-descending-specificity": null,
+    "function-no-unknown": null,
+    "scss/no-global-function-names": null,
+    "scss/function-no-unknown": null,
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {
+        "ignorePseudoClasses": ["global"]
+      }
+    ]
+  }
+}

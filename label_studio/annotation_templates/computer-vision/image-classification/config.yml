@@ -1,0 +1,24 @@
+title: 图像分类
+type: community
+group: 计算机视觉
+image: /static/templates/image-classification.png
+details: |
+  <h1>Classify the image</h1>
+  <dl>
+    <dt>Industry Applications</dt>
+    <dd>content moderation, safety detection, inappropriate content, nsfw detection, social media moderation, platform safety, community guidelines</dd>
+    <dt>Associated Models</dt>
+    <dd>ResNet, EfficientNet, Vision Transformer, CNN, ConvNet</dd>
+    <dt>Domain Terminology</dt>
+    <dd>image tagging, visual categorization, multi-class, single-label</dd>
+  </dl>
+config: |
+  <View>
+    <Image name="image" value="$image"/>
+    <Choices name="choice" toName="image">
+      <Choice value="Adult content"/>
+      <Choice value="Weapons" />
+      <Choice value="Violence" />
+    </Choices>
+  </View>
+

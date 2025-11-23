@@ -1,0 +1,12 @@
+{
+  "name": "@humansignal/design-tokens-converter",
+  "version": "0.0.1",
+  "description": "Design tokens converter",
+  "type": "module",
+  "main": "design-tokens-converter.mjs",
+  "bin": {
+    "design-tokens-converter": "./design-tokens-converter.mjs"
+  },
+  "license": "MIT",
+  "dependencies": {}
+}

@@ -1,0 +1,113 @@
+.export-page {
+  &__recent {
+    display: grid;
+    grid-auto-flow: rows;
+  }
+
+  &__footer {
+    margin: 0 -40px -32px;
+    padding: 24px 32px;
+    position: sticky;
+    bottom: -40px;
+    background-color: var(--color-neutral-surface-active);
+    border-top: 1px solid var(--color-neutral-border);
+  }
+}
+
+.formats {
+  color: var(--color-neutral-content-subtler);
+  font-size: 16px;
+  padding-bottom: var(--spacing-base);
+
+  &__list {
+    margin: 10px -7px;
+    display: flex;
+    flex-flow: row wrap;
+    gap: var(--spacing-tight);
+  }
+
+  & a {
+    color: var(--color-primary-content);
+    text-decoration: underline;
+  }
+
+  &__item {
+    padding: 10px 9px 10px 38px;
+    border-radius: 4px;
+    position: relative;
+    pointer-events: none;
+    color: var(--color-neutral-content);
+    transition: all 150ms ease-out;
+    border: 1px solid transparent;
+    width: 100%;
+
+    &_active {
+      cursor: pointer;
+      pointer-events: all;
+    }
+
+    &_active:hover:not(&_selected) {
+      background-color: var(--color-primary-emphasis-subtle);
+    }
+
+
+    &:not(&_active) {
+      opacity: 0.3;
+    }
+
+    &::before,
+    &::after {
+      top: 50%;
+      left: 10px;
+      width: 18px;
+      height: 18px;
+      content: '';
+      display: block;
+      position: absolute;
+      border-radius: 100%;
+      transform: translate(0, -50%);
+    }
+
+    &::before {
+      box-shadow: 0 0 0 0.5px var(--color-neutral-content-subtler);
+    }
+
+    &_selected {
+      pointer-events: none;
+      background-color: var(--color-primary-emphasis);
+      border: 1px solid var(--color-primary-border-subtler);
+
+      &::after {
+        left: 12px;
+        width: 14px;
+        height: 14px;
+        background-color: var(--color-primary-content);
+      }
+
+      &::before {
+        box-shadow: 0 0 0 0.5px var(--color-neutral-content);
+      }
+    }
+  }
+
+  &__name {
+    display: flex;
+    font-weight: 500;
+    justify-content: space-between;
+  }
+
+  &__tag {
+    font-size: 12px;
+    padding: 2px 5px;
+    border-radius: 2px;
+    font-weight: 400;
+    background-color: var(--color-primary-background);
+    color: var(--color-primary-content);
+  }
+
+  &__description {
+    font-size: 14px;
+    opacity: 0.7;
+    color: var(--color-neutral-content-subtle);
+  }
+}

@@ -1,0 +1,85 @@
+.ls-global-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 15vh;
+}
+
+.ls-global-error__header {
+  position: relative;
+  width: 812px;
+}
+
+.ls-global-error__code {
+  font-size: 380px;
+  font-weight: 700;
+  color: var(--color-neutral-content);
+  user-select: none;
+  -webkit-user-select: none;
+  line-height: 1em;
+  text-align: center;
+}
+
+.ls-global-error__heidi {
+  width: 812px;
+  position: absolute;
+  top: -22px;
+  left: -22px;
+  height: 100%;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.ls-global-error h1 {
+  font-size: 48px;
+  color: var(--color-neutral-content);
+}
+
+.ls-global-error h2 {
+  font-size: 16px;
+  color: var(--color-neutral-content);
+  font-weight: 500;
+}
+
+.ls-global-error__actions {
+  display: flex;
+  gap: 24px;
+}
+.ls-global-error__actions > * {
+  line-height: 1em;
+}
+
+/* Compiled from Button.style */
+body > .ls-global-error button,
+body > .ls-global-error .button {
+  height: 40px;
+  width: 129px;
+  border: none;
+  cursor: pointer;
+  padding: 0 16px;
+  display: inline-flex;
+  background-color: var(--color-neutral-background);
+  align-items: center;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  justify-content: center;
+  color: var(--color-neutral-content);
+  border: 1px solid var(--color-neutral-border);
+  font-weight: 500;
+  transition: all 150ms ease-out;
+}
+
+body > .ls-global-error button:hover {
+  border-color: var(--color-neutral-border-bold);
+}
+
+body > .ls-global-error button.ls-global-error__primary_button {
+  background-color: var(--color-primary-surface);
+  color: var(--color-primary-surface-content);
+  transition: all 150ms ease-out;
+}
+
+body > .ls-global-error button.ls-global-error__primary_button:hover {
+  background-color: var(--color-primary-surface-hover);
+}

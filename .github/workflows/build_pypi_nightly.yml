@@ -1,0 +1,150 @@
+name: "Build PyPI Nightly"
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 1-5'  # Run at midnight UTC Monday through Friday
+
+jobs:
+  calculate-version:
+    name: "Calculate Version"
+    runs-on: ubuntu-latest
+    if: github.repository_owner == 'HumanSignal'
+    outputs:
+      version: ${{ steps.set-nightly-version.outputs.version }}
+    steps:
+      - name: Set nightly version
+        id: set-nightly-version
+        run: |
+          set -e
+          version=$(curl -s "https://raw.githubusercontent.com/HumanSignal/label-studio/refs/heads/${{ github.event.repository.default_branch }}/pyproject.toml" | grep '^version' | cut -d'"' -f2)
+          version="${version%dev*}dev$(date +'%Y%m%d')"
+          echo "version=${version}" >> $GITHUB_OUTPUT
+
+  create-nightly-release:
+    name: "Create Nightly Release"
+    runs-on: ubuntu-latest
+    if: github.repository_owner == 'HumanSignal'
+    needs: calculate-version
+    outputs:
+      release_id: ${{ steps.create_release.outputs.id }}
+    steps:
+      - name: Get previous nightly release
+        id: previous-nightly
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.GIT_PAT }}
+          script: |
+            const { repo, owner } = context.repo;
+            try {
+              const nightlyRelease = await github.rest.repos.getReleaseByTag({
+                owner,
+                repo,
+                tag: 'nightly'
+              });
+              await github.rest.repos.deleteRelease({
+                owner,
+                repo,
+                release_id: nightlyRelease.data.id
+              });
+              await github.rest.git.deleteRef({
+                owner,
+                repo,
+                ref: 'tags/nightly'
+              });
+            } catch (error) {
+              if (error.status === 404) {
+                console.log('No previous nightly release found');
+              } else {
+                throw error;
+              }
+            }
+
+      - name: Generate Changelog
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.GIT_PAT }}
+          script: |
+            const { repo, owner } = context.repo;
+            const latestRelease = await github.rest.repos.getLatestRelease({
+              owner,
+              repo
+            });
+            const latestTag = latestRelease.data.tag_name;
+            const message = `# Nightly Build
+
+            This is an automated nightly build that is recreated every night with the latest changes from the \`${{ github.event.repository.default_branch }}\` branch.
+
+            ## Installation
+
+            You can install this nightly build by downloading the wheel package (the file ending in \`.whl\`) from the \`Assets\` section below this description. 
+            After downloading, you can install it using the following commands from your terminal:
+
+            For Windows:
+            \`\`\`bash
+            pip install %USERPROFILE%\\Downloads\\label_studio-${{ needs.calculate-version.outputs.version }}-py3-none-any.whl
+            \`\`\`
+
+            For macOS/Linux:
+            \`\`\`bash
+            pip install ~/Downloads/label_studio-${{ needs.calculate-version.outputs.version }}-py3-none-any.whl
+            \`\`\`
+
+            ## Important Notes
+            - This is a development build and may contain bugs or incomplete features
+            - Use in production environments is not recommended
+            - Please report any issues you encounter in our [GitHub Issues](https://github.com/${owner}/${repo}/issues)
+            - This release is automatically recreated every night with the latest changes
+
+            ## Changes
+            Changes since ${latestTag}: https://github.com/${owner}/${repo}/compare/${latestTag}...nightly`;
+            const fs = require('fs');
+            fs.writeFileSync('${{ github.workspace }}-CHANGELOG.txt', message);
+
+      - name: Create Nightly Release
+        id: create_release
+        uses: softprops/action-gh-release@v2.4.2
+        with:
+          token: ${{ secrets.GIT_PAT }}
+          body_path: ${{ github.workspace }}-CHANGELOG.txt
+          tag_name: nightly
+          name: ${{ needs.calculate-version.outputs.version }}
+          generate_release_notes: false
+          draft: false
+          prerelease: true
+          append_body: false
+
+  build-pypi:
+    name: "Build"
+    if: github.repository_owner == 'HumanSignal'
+    needs: [calculate-version, create-nightly-release]
+    permissions:
+      contents: write
+    uses: ./.github/workflows/build_pypi.yml
+    with:
+      version: ${{ needs.calculate-version.outputs.version }}
+      ref: ${{ github.ref_name }}
+      upload_to_pypi: false
+      release_type: nightly
+      release-id: ${{ needs.create-nightly-release.outputs.release_id }}
+    secrets: inherit
+
+  notify_slack_on_failure:
+      name: "Notify Slack on Failure"
+      needs:
+        - build-pypi
+        - create-nightly-release
+      runs-on: ubuntu-latest
+      if: failure()
+      steps:
+        - name: Send Notification to Slack
+          id: slack_notify_ops_release
+          uses: slackapi/slack-github-action@v1.27
+          with:
+            channel-id: 'C01RJV08UJK'
+            slack-message: |
+              ❌ Nightly PyPI build failed! <!subteam^${{ vars.SLACK_GR_DEVOPS }}>
+
+              ><https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|[Workflow run]>
+          env:
+            SLACK_BOT_TOKEN: ${{ secrets.SLACK_LSE_BOT_TOKEN }}

@@ -1,0 +1,246 @@
+<% var isIndex = page.path === 'index.html' %>
+<% var isBlog = page.type === 'blog' %>
+<% var isGuide = page.type === 'guide' %>
+<% const isEnterpriseTheme = theme.tier === "enterprise" %>
+
+<% var defaultSeo = {
+  description: "Get started with Label Studio by creating projects to label and annotate data for machine learning and data science models.",
+  ogImage: isEnterpriseTheme ? "og-default-enterprise.png" : "og-default-ls.png"
+} %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <% if(isEnterpriseTheme) {%>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-K6H522B');</script>
+  <% } else { %>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TZ3RQGX');</script>
+    <!-- End Google Tag Manager -->
+  <% } %>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <% var titlePrefix;
+    if (isBlog) {
+      titlePrefix = 'Label Studio Blog';
+    } else if (isGuide) {
+      titlePrefix = isEnterpriseTheme ? "Label Studio Enterprise Documentation" : "Label Studio Documentation";
+    } else {
+      titlePrefix = isEnterpriseTheme ? "Label Studio Enterprise" : "Label Studio";
+    }
+  %>
+  <% if (page.meta_title) { %>
+  <title><%- titlePrefix + ' — ' + page.meta_title %></title>
+  <% } else { %>
+  <title><%- page.title ? page.title : titlePrefix %> — Data Labeling</title>
+  <% } %>
+  <meta charset="utf-8">
+  <meta name="description" content="<%- page.meta_description ? page.meta_description : defaultSeo.description %>">
+
+  <meta property="og:type" content="article">
+  <% if (page.meta_title) { %>
+  <meta property="og:title" content="<%- titlePrefix + ' — ' + page.meta_title %>">
+  <% } else { %>
+  <meta property="og:title" content="<%- page.title ? page.title + ' — ' : titlePrefix %>">
+  <% } %>
+  <meta property="og:description" content="<%- page.meta_description ? page.meta_description : defaultSeo.description %>">
+
+  <meta name="twitter:card" content="summary">
+  <% if (page.meta_title) { %>
+  <meta property="twitter:title" content="<%- titlePrefix + ' — ' + page.meta_title %>">
+  <% } else { %>
+  <meta property="twitter:title" content="<%- page.title ? page.title + ' — ' : titlePrefix %>">
+  <% } %>
+  <meta name="twitter:description" content="<%- page.meta_description ? page.meta_description : defaultSeo.description %>">
+
+  <% if (page.title) { %>
+    <meta name="twitter:image" content="http://<%- config.theme_config.root_domain %>/open-graph-image?title=<%- encodeURIComponent(page.title) %>&category=<%- path.split('/')[0] %>"/>
+    <meta property="og:image" content="http://<%- config.theme_config.root_domain %>/open-graph-image?title=<%- encodeURIComponent(page.title) %>&category=<%- path.split('/')[0] %>"/>
+  <% } else { %>
+    <meta property="og:image" content="https://<%- config.theme_config.root_domain %>/images/<%- defaultSeo.ogImage %>" />
+    <meta name="twitter:image" content="https://<%- config.theme_config.root_domain %>/images/<%- defaultSeo.ogImage %>"/>
+  <% } %>
+
+  <meta name="msapplication-TileColor" content="#4fc08d">
+  <meta name="theme-color" content="#4fc08d">
+  
+  <% if (isEnterpriseTheme) { %>
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
+  <% } else { %>
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
+  <% } %>
+
+  <link rel="preload" href="/fonts/SpaceGrotesk-Bold-subset.woff2" as="font" type="font/woff2" crossorigin>
+
+  <%- css("css/styles.css") %>
+
+  <% if (page.type === "playground") { %>
+    <%- css('css/codemirror') %>
+    <script src="<%- url_for("/js/playground/jquery.min.js") %>"></script>
+    <script src="<%- url_for("/js/playground/jquery-ui.min.js") %>"></script>
+    <script src="<%- url_for("/js/playground/codemirror.js") %>"></script>
+    <script src="<%- url_for("/js/playground/xml.js") %>"></script>
+  <% } %>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js" defer></script>
+
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+
+</head>
+<body class="<%- 'page-tier-' + theme.tier %>">
+  
+  
+
+  <% if(isEnterpriseTheme) {%>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K6H522B"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <% } else { %>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TZ3RQGX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <% } %>
+
+  <% const tier = theme.tier || "all" %>
+  <%- partial("partials/header") %>
+
+  <main class="<%- 'page-type-' + page.type %>">
+    <% if(page.type !== "playground" && page.type !== "blog" && page.hide_sidebar !== true) { %>
+      <aside class="page-sidebar">
+        <%- partial("partials/toc", { type: page.type, tier: tier }) %>
+      </aside>
+    <% } %>
+    <div class="content">
+      <% if(isEnterpriseTheme) { %>
+        
+      <% } else { %>
+        <svg width="50" height="50" viewBox="0 0 77 77" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="content-decoration">
+          <rect x="75.875" y="26" width="25" height="25" transform="rotate(-180 75.875 26)" stroke="#E1DED5" stroke-width="0.504975"/>
+          <rect x="50.875" y="51" width="25" height="25" transform="rotate(-180 50.875 51)" stroke="#E1DED5" stroke-width="0.504975"/>
+          <rect x="50.875" y="26" width="25" height="25" transform="rotate(-180 50.875 26)" fill="#FF7557"/>
+          <rect x="26" y="76" width="25" height="25" transform="rotate(-180 26 76)" stroke="#E1DED5" stroke-width="0.504975"/>
+          <rect x="26" y="51" width="25" height="25" transform="rotate(-180 26 51)" fill="#E37BD3"/>
+          <rect x="26" y="26" width="25" height="25" transform="rotate(-180 26 26)" fill="#FFA663"/>
+        </svg>
+      <% } %>
+        
+      <div class="container">
+        <%- body %>
+        <% if(page.type === "templates" || page.type === "gallery") { %>
+        <div class="column-wrapper">
+          <div class="columns">
+            <a href="https://github.com/HumanSignal/awesome-label-studio-configs" target="_blank" class="card card-link">
+              <div class="card-text">
+                <svg fill="none" height="30" viewBox="0 0 30 30" width="30" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="card-icon"><linearGradient id="a" gradientUnits="userSpaceOnUse" x1="0" x2="36.0944" y1="0" y2="12.7577"><stop offset="0" stop-color="#ffa663"/><stop offset=".515625" stop-color="#ff7557"/><stop offset="1" stop-color="#e37bd3"/></linearGradient><clipPath id="b"><path d="m0 0h30v30h-30z"/></clipPath><g clip-path="url(#b)"><path d="m15 30c8.2843 0 15-6.7157 15-15 0-8.28427-6.7157-15-15-15-8.28427 0-15 6.71573-15 15 0 8.2843 6.71573 15 15 15z" fill="url(#a)"/><path d="m9.66667 7.1039c.70723 0 1.38553.27912 1.88563.77597s.781 1.17073.781 1.87338c0 1.15685-.7377 2.13715-1.7777 2.49925v4.5989c1.04.3621 1.7777 1.3424 1.7777 2.4992 0 .7027-.2809 1.3766-.781 1.8734-.5001.4969-1.1784.776-1.88563.776-.70725 0-1.38552-.2791-1.88562-.776-.5001-.4968-.78105-1.1707-.78105-1.8734 0-1.1568.73778-2.1371 1.77778-2.4992v-4.5989c-1.04-.3621-1.77778-1.3424-1.77778-2.49925 0-.70265.28095-1.37653.78105-1.87338s1.17837-.77597 1.88562-.77597zm0 1.76623c-.23575 0-.46184.09304-.62854.25866s-.26035.39024-.26035.62446c0 .23421.09365.45885.26035.62445s.39279.2587.62854.2587c.23574 0 .46183-.0931.62853-.2587s.2604-.39024.2604-.62445c0-.23422-.0937-.45884-.2604-.62446s-.39279-.25866-.62853-.25866zm0 9.59737c-.23575 0-.46184.0931-.62854.2587s-.26035.3902-.26035.6244c0 .2343.09365.4589.26035.6245s.39279.2587.62854.2587c.23574 0 .46183-.0931.62853-.2587s.2604-.3902.2604-.6245c0-.2342-.0937-.4588-.2604-.6244s-.39279-.2587-.62853-.2587zm13.33333.8831c0 .7027-.281 1.3766-.781 1.8734-.5001.4969-1.1784.776-1.8857.776-.7072 0-1.3855-.2791-1.8856-.776-.5001-.4968-.781-1.1707-.781-1.8734 0-1.1568.7377-2.1371 1.7777-2.4992v-6.215h-1.7777v2.8701l-3.7778-3.75325 3.7778-3.75325v2.87013h1.7777c.4715 0 .9237.18608 1.2571.51732.3334.33123.5207.78045.5207 1.24895v6.215c1.04.3621 1.7778 1.3424 1.7778 2.4992zm-2.6667-.8831c-.2357 0-.4618.0931-.6285.2587s-.2604.3902-.2604.6244c0 .2343.0937.4589.2604.6245s.3928.2587.6285.2587c.2358 0 .4619-.0931.6286-.2587s.2603-.3902.2603-.6245c0-.2342-.0936-.4588-.2603-.6244s-.3928-.2587-.6286-.2587z" fill="#fff"/></g></svg>         
+                <%- partial("component/heading", {text: "Share Your Label Studio Configs!", tag: "h2", customClass: "card-title" }) %>
+                <p class="Text">Inspire the community by sharing your unique Label Studio configurations in the Awesome Label Studio Configs repository!</p>
+                <div class="Link">Contribute now!<svg width="14" height="13" fill="#131522" xmlns="http://www.w3.org/2000/svg"><path d="M7.441 12.236 6.291 11.1l3.995-3.995H.25V5.442h10.036L6.29 1.453 7.441.31l5.964 5.964-5.964 5.963Z" /></svg></div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <% } %>
+        <footer class="content-footer">
+          <div class="helpful-container">
+            
+            <form class="helpful-form" id="helpful-form">
+              <%- partial("component/text", {text: "Was this useful?", tag: "h3", size: "Eyebrow"}) %>
+              <fieldset>
+                <div class="helpful-button-group">
+                  <div class="helpful-radio-container">
+                    <input type="radio" name="helpful" id="feedback-helpful-yes" value="yes">
+                    <label for="feedback-helpful-yes" class="helpful-button">
+                      <svg width="24" height="24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.048 3.544a.881.881 0 0 0-1.112.353l-2.71 4.518A2.75 2.75 0 0 1 6.868 9.75H4.25v9.5h12.222a1.25 1.25 0 0 0 1.205-.921l1.91-7a1.252 1.252 0 0 0-1.206-1.579h-4.576a1.35 1.35 0 0 1-1.291-1.737l1.022-3.408a.882.882 0 0 0-.488-1.06Zm-1.077-1.463a2.38 2.38 0 0 1 3.001 2.954m0 0-.964 3.215h4.373a2.75 2.75 0 0 1 2.654 3.473l-1.91 7a2.75 2.75 0 0 1-2.651 2.027H4.1a1.35 1.35 0 0 1-1.35-1.35V9.6A1.35 1.35 0 0 1 4.1 8.25h2.768a1.25 1.25 0 0 0 1.072-.607l2.71-4.516c.298-.498.768-.87 1.321-1.046" /><path fill-rule="evenodd" clip-rule="evenodd" d="M7 8.25a.75.75 0 0 1 .75.75v11a.75.75 0 0 1-1.5 0V9A.75.75 0 0 1 7 8.25Z" /></svg>
+                      Yes
+                    </label>
+                  </div>
+                  <div class="helpful-radio-container">
+                    <input type="radio" name="helpful" id="feedback-helpful-no" value="no">
+                    <label for="feedback-helpful-no" class="helpful-button">
+                      <svg width="24" height="24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.048 20.456a.88.88 0 0 1-1.112-.354l-2.71-4.517a2.75 2.75 0 0 0-2.358-1.335H4.25v-9.5h12.222a1.251 1.251 0 0 1 1.205.921l1.91 7a1.252 1.252 0 0 1-1.206 1.579h-4.576a1.351 1.351 0 0 0-1.291 1.737l1.022 3.408a.883.883 0 0 1-.488 1.06Zm-1.077 1.463a2.381 2.381 0 0 0 3.001-2.954m0 0-.964-3.215h4.373a2.75 2.75 0 0 0 2.654-3.473l-1.91-7a2.75 2.75 0 0 0-2.651-2.027H4.1A1.35 1.35 0 0 0 2.75 4.6v9.8a1.35 1.35 0 0 0 1.35 1.35h2.768a1.25 1.25 0 0 1 1.072.607l2.71 4.516c.298.498.768.87 1.321 1.046" /><path fill-rule="evenodd" clip-rule="evenodd" d="M7 15.75a.75.75 0 0 0 .75-.75V4a.75.75 0 0 0-1.5 0v11c0 .414.336.75.75.75Z" /></svg>
+                      No
+                    </label>
+                  </div>
+                </div>
+                <div class="helpful-form-more" id="helpful-more">
+                  <label for="feedback-comment" class="helpful-form-label">Please add your feedback (optional)</label>
+                  <textarea name="feedback" id="feedback-comment" class="helpful-form-textarea"></textarea>
+
+                  <label for="feedback-email" class="helpful-form-label">Can we contact you with more questions? (optional)</label>
+                  <input type="email" name="email" id="feedback-email" placeholder="Your email" class="helpful-form-input" />
+                  
+                  <div class="helpful-form-submit-container">
+                    <button type="button" class="Button Secondary" id="helpful-form-cancel-button">Cancel</button>
+                    <button type="submit" class="Button" id="helpful-form-submit-button">Send</button>
+                  </div>
+                </div>
+                <div class="helpful-form-confirmation" id="helpful-more-confirmation">
+                  Thanks for the feedback!
+                </div>
+              </fieldset>
+            </form>
+          </div>
+          <div>
+            <% if(!isEnterpriseTheme) {%>
+              <%- partial("component/text", {text: "Contribute to the docs", tag: "h3", size: "Eyebrow"}) %>
+              <%- partial("component/text", {text: "Our docs are open source. See something that could be improved? Submit a pull request.", tag: "h3", size: "Small"}) %>
+              <%- partial("component/button", { url: "https://github.com/HumanSignal/label-studio", label: "Make a contribution", }) %>
+            <% } %>
+          </div>
+          <div>
+            <%- partial("component/text", {text: "Can’t find what you’re looking for?", tag: "h3", size: "Eyebrow"}) %>
+            <% if(isEnterpriseTheme) { %>
+              <%- partial("component/button", { url: "https://support.humansignal.com", label: "Contact Support", }) %>
+            <% } else { %>
+              <div class="content-footer-button-group">
+                <%- partial("component/button", { url: "https://github.com/HumanSignal/label-studio/issues", label: "Submit a GitHub Issue", }) %>
+                <%- partial("component/button", { url: "https://slack.labelstud.io/?source=docs-footer", label: "Join Slack Community", theme: "Secondary", icon: "Slack"}) %>
+              </div>
+            <% } %>
+            </div>
+        </footer>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    var savedScrollPosition = localStorage.getItem('labelstudio_scrollPosition');
+      if (savedScrollPosition) {
+        document.querySelector(".page-sidebar").scrollTop = savedScrollPosition;
+      }
+  </script>
+
+  <% if (page.permalink.includes("concat.html") || page.permalink.includes("release_notes.html")) { %>
+    <%- js('js/collapse.js') %>
+  <% } %>
+  <%- partial("partials/footer") %>
+
+  <%- js('js/code-tabs.js') %>
+  <%- js('js/code-blocks-enhancements.js') %>
+  <%- js('js/feedback-form.js') %>
+  <%- js('js/header.js') %>
+  <%- js('js/intense.min.js') %>
+
+  <script>
+    window.addEventListener('load', function () {
+      const htmlElement = document.querySelector("html");
+
+      htmlElement.classList.add("js-enhanced");
+    })
+</script>
+
+</body>
+</html>

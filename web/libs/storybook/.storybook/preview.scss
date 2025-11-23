@@ -1,0 +1,30 @@
+@import '../../ui/src/styles';
+
+body {
+  height: 100vh;
+  color: var(--color-neutral-content);
+  background-color: var(--color-neutral-background);
+}
+
+#storybook-root {
+  height: 100%;
+  color: var(--color-neutral-content);
+  background-color: var(--color-neutral-background);
+}
+
+// Undo tailwind reset for the Docs pages
+#storybook-docs .sbdocs-content h1:not(.sbdocs-preview *),
+#storybook-docs .sbdocs-content h2:not(.sbdocs-preview *),
+#storybook-docs .sbdocs-content h3:not(.sbdocs-preview *),
+#storybook-docs .sbdocs-content h4:not(.sbdocs-preview *),
+#storybook-docs .sbdocs-content h5:not(.sbdocs-preview *),
+#storybook-docs .sbdocs-content h6:not(.sbdocs-preview *) {
+  color: var(--color-sand-800) !important;
+}
+
+
+// Within Doc Pages apply the theme colors only to the preview blocks
+.sbdocs-preview {
+  background-color: var(--color-neutral-background) !important;
+  color: var(--color-neutral-content);
+}

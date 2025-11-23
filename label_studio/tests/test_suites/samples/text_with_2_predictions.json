@@ -1,0 +1,26 @@
+[{
+  "data": {
+    "text": "Test example phrase"
+  },
+  "predictions": [{
+    "result": [{
+      "from_name": "label",
+      "to_name": "text",
+      "type": "choices",
+      "value": {
+        "choices": ["pos"]
+      }
+    }],
+    "model_version": "model_version_A"
+  }, {
+    "result": [{
+      "from_name": "label",
+      "to_name": "text",
+      "type": "choices",
+      "value": {
+        "choices": ["neg"]
+      }
+    }],
+    "model_version": "model_version_B"
+  }]
+}]

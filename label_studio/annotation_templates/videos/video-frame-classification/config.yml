@@ -1,0 +1,27 @@
+title: 视频帧分类
+type: community
+group: 视频
+image: /static/templates/video-frame-classification.png
+details: |
+  <h1>Classify frames within a video</h1>
+  <dl>
+    <dt>Industry Applications</dt>
+    <dd>video editing, sports highlights, security surveillance, medical procedure analysis, broadcast media, content creation, quality assurance, automated editing, scene detection, event detection, highlight extraction</dd>
+    <dt>Associated Models</dt>
+    <dd>temporal segmentation, frame-level analysis, timeline labeling, shot boundary detection</dd>
+    <dt>Domain Terminology</dt>
+    <dd>video segmentation, temporal annotation, scene classification, frame-based labeling, video timeline</dd>
+  </dl>
+config: |
+  <View>
+    <TimelineLabels name="videoLabels" toName="video">
+      <Label value="Movement" background="#c813ec"/>
+      <Label value="Still" background="#1d81cd"/>
+      <Label value="Slow Motion" background="#54d651"/>
+    </TimelineLabels>
+    <Video name="video" value="$video" timelineHeight="120" />
+  </View>
+
+  <!--{
+   "video": "/static/samples/opossum_snow.mp4"
+  }-->

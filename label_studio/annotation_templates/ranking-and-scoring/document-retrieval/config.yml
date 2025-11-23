@@ -1,0 +1,33 @@
+title: 文档检索
+type: community
+group: 排名与评分
+image: /static/templates/document-retrieval.png
+details: |
+  <h1>Select document related to the query</h1>
+  <dl>
+    <dt>Industry Applications</dt>
+    <dd>legal research, academic research, customer support, knowledge management, enterprise search, medical literature, patent search, compliance documents, technical documentation, regulatory research, due diligence, case law research</dd>
+    <dt>Associated Models</dt>
+    <dd>information retrieval, semantic search, vector search, TF-IDF, BM25, dense retrieval</dd>
+    <dt>Domain Terminology</dt>
+    <dd>relevance ranking, search quality, precision and recall, retrieval evaluation, query matching</dd>
+  </dl>
+config: |
+  <View>
+    <Text name="query" value="$query" />
+    <Header value="Select document related to the query:" />
+    <View style="display: flex">
+      <View style="width:50%">
+        <Text name="text1" value="$text1" />
+        <Text name="text2" value="$text2" />
+        <Text name="text3" value="$text3" />
+      </View>
+      <View>
+        <Choices name="selection" toName="query" required="true" choice="multiple">
+          <Choice value="One" />
+          <Choice value="Two" />
+          <Choice value="Two" />
+        </Choices>
+      </View>
+    </View>
+  </View>

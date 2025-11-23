@@ -1,0 +1,63 @@
+name: "Build tag docs"
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        type: string
+        required: true
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Ref"
+        type: string
+        required: true
+
+env:
+  NODE: "22"
+  FRONTEND_MONOREPO_DIR: "web"
+  FRONTEND_BUILD_COMMIT_MESSAGE: "ci: Build tag docs"
+  DOCS_TARGET_DIR: "docs/source/includes/tags"
+  SCHEMA_TARGET_DIR: "web/libs/core/src/lib/utils/schema/tags.json"
+
+jobs:
+  build:
+    name: "Frontend"
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - uses: hmarr/debug-action@v3.0.0
+
+      - name: Configure git
+        shell: bash
+        run: |
+          set -xeuo pipefail
+          git config --global user.name 'robot-ci-heartex'
+          git config --global user.email 'robot-ci-heartex@users.noreply.github.com'
+
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          token: ${{ secrets.GIT_PAT }}
+          ref: ${{ inputs.ref }}
+
+      - name: Setup frontend environment
+        uses: ./.github/actions/setup-frontend-environment
+        with:
+          node-version: "${{ env.NODE }}"
+          directory: "${{ env.FRONTEND_MONOREPO_DIR }}"
+
+      - name: "Generate docs tags files"
+        working-directory: "${{ env.FRONTEND_MONOREPO_DIR }}"
+        run: yarn docs
+
+      - name: "Commit and Push"
+        env:
+          COMMIT_MESSAGE: "${{ env.FRONTEND_BUILD_COMMIT_MESSAGE }}"
+          WORKFLOW_LINK: "Workflow run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        run: |
+          git add "${{ env.DOCS_TARGET_DIR }}" || true
+          git add "${{ env.SCHEMA_TARGET_DIR }}" || true
+          git status -s
+          git commit -m "${COMMIT_MESSAGE}" -m "${WORKFLOW_LINK}" || true
+          git push origin HEAD

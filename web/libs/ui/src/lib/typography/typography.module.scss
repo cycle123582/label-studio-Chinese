@@ -1,0 +1,67 @@
+.typography-display-large {
+  @apply text-display-large leading-display-large font-medium font-headings tracking-densest;
+}
+
+.typography-display-medium {
+  @apply text-display-medium leading-display-medium font-medium font-headings tracking-densest;
+}
+
+.typography-display-small {
+  @apply text-display-small leading-display-small font-medium font-headings tracking-densest;
+}
+
+.typography-headline-large {
+  @apply text-headline-large leading-headline-large font-medium font-headings tracking-densest;
+}
+
+.typography-headline-medium {
+  @apply text-headline-medium leading-headline-medium font-medium font-headings tracking-denser;
+}
+
+.typography-headline-small {
+  @apply text-headline-small leading-headline-small font-medium font-headings tracking-dense;
+}
+
+.typography-title-large {
+  @apply text-title-large leading-title-large font-medium font-headings tracking-base;
+}
+
+.typography-title-medium {
+  @apply text-title-medium leading-title-medium font-medium font-headings tracking-base;
+}
+
+.typography-title-small {
+  @apply text-title-small leading-title-small font-medium font-headings tracking-wide;
+}
+
+.typography-label-medium {
+  @apply text-label-medium leading-label-medium font-medium font-body tracking-wide;
+}
+
+.typography-label-small {
+  @apply text-label-small leading-label-small font-medium font-body tracking-wide;
+}
+
+.typography-label-smaller {
+  @apply text-label-smaller leading-label-smaller font-medium font-body tracking-wider;
+}
+
+.typography-label-smallest {
+  @apply text-label-smallest leading-label-smallest font-medium font-body tracking-widest;
+}
+
+.typography-body-medium {
+  @apply text-body-medium leading-body-medium font-regular font-body tracking-base;
+}
+
+.typography-body-small {
+  @apply text-body-small leading-body-small font-regular font-body tracking-wider;
+}
+
+.typography-body-smaller {
+  @apply text-body-smaller leading-body-smaller font-regular font-body tracking-widest;
+}
+
+.typography-body-smallest {
+  @apply text-body-smallest leading-body-smallest font-regular font-body tracking-widest;
+}

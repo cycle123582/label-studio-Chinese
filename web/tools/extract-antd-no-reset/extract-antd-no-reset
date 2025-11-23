@@ -1,0 +1,3 @@
+#!/usr/bin/env node
+
+import "./extract-antd-no-reset.mjs";

@@ -1,0 +1,40 @@
+.bottombar {
+  height: var(--bottombar-height);
+  width: 100%;
+  z-index: 101;
+  flex: none;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  background-color: var(--color-neutral-background);
+  border-bottom: 1px solid var(--color-neutral-border);
+  user-select: none;
+  position: absolute;
+  bottom: 0;
+
+  &__group {
+    display: flex;
+    align-items: stretch;
+  }
+
+  &__section {
+    display: flex;
+    padding: 0 var(--spacing-tight);
+    align-items: center;
+    box-sizing: border-box;
+    gap: var(--spacing-small);
+
+    &_flat {
+      padding: 0;
+    }
+
+    & .button {
+      &_withIcon {
+        &:not([disabled]):hover {
+          background-color: var(--color-primary-emphasis-subtle) !important;
+          border-radius: 4px;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+title: 声音事件检测
+type: community
+group: 音频 / 语音处理
+image: /static/templates/sound-event-detection.png
+details: |
+  <h1>Select audio span and classify sound event</h1>
+  <dl>
+    <dt>Industry Applications</dt>
+    <dd>security surveillance, smart cities, environmental monitoring, industrial monitoring, wildlife monitoring, urban soundscape, home automation, assistive technology, automotive safety, machine condition monitoring, healthcare monitoring, emergency detection</dd>
+    <dt>Associated Models</dt>
+    <dd>acoustic scene classification, audio event classification, environmental sound recognition, CRNN models</dd>
+    <dt>Domain Terminology</dt>
+    <dd>acoustic event detection, polyphonic sound detection, audio tagging, soundscape analysis</dd>
+  </dl>
+config: |
+  <View>
+    <Labels name="label" toName="audio" zoom="true" hotkey="ctrl+enter">
+      <Label value="Event A" background="red"/>
+      <Label value="Event B" background="green"/>
+    </Labels>
+    <Audio name="audio" value="$audio"/>
+  </View>
+

@@ -1,0 +1,19 @@
+title: 信号质量检测
+type: community
+group: 音频 / 语音处理
+image: /static/templates/signal-quality-detection.png
+details: |
+  <h1>Rate signal quality</h1>
+  <dl>
+    <dt>Industry Applications</dt>
+    <dd>telecommunications, call center quality, broadcast monitoring, audio production, recording studio, streaming media, VoIP quality, podcast production, hearing aids, audio forensics, conference systems, radio communication</dd>
+    <dt>Associated Models</dt>
+    <dd>PESQ, STOI, SNR measurement, audio quality metrics, perceptual quality</dd>
+    <dt>Domain Terminology</dt>
+    <dd>audio quality assessment, signal degradation, noise assessment, clarity rating, fidelity evaluation</dd>
+  </dl>
+config: |
+  <View>
+    <Rating name="rating" toName="audio" maxRating="10" icon="star" size="medium" />
+    <Audio name="audio" value="$audio"/>
+  </View>

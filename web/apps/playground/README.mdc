@@ -1,0 +1,134 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Playground
+
+## Overview
+The LabelStudio Playground is a standalone, embeddable React application for editing and previewing LabelStudio XML labeling configurations. It is designed to be embedded via iframe in documentation or external web applications, providing a focused environment for working with XML-based labeling configs and live previewing the LabelStudio interface.
+
+## Main Features
+
+- **Live XML Config Editing:** Edit Label Studio XML configs in real time and instantly preview the result.
+- **Sample Data Generation:** Automatically generates sample data for all supported media types (image, audio, video, PDF, website, CSV, OCR, etc.) using public domain URLs (primarily from Wikimedia Commons). This ensures copyright-safe, always-accessible previews.
+- **Live Annotation Output:** The preview panel displays the current annotation as a live-updating JSON string, reflecting user interactions in real time.
+- **Sticky Bottom Panel:** The right preview panel ensures the bottom panel (annotation controls) is always visible and sticky, with the main preview area scrollable.
+- **Resizable Panels:** The left (editor) and right (preview) panels are resizable and fully responsive.
+- **Robust Error Handling:** Displays clear error messages for invalid configs, network issues, or MobX State Tree (MST) errors. All async and MST errors are handled gracefully to avoid UI crashes.
+
+## Main Components
+
+### 1. `PlaygroundApp`
+- **Location:** `src/components/PlaygroundApp.tsx`
+- **Role:** The main application component. Handles:
+  - UI rendering and atom wiring only; all state is managed via Jotai atoms.
+  - Reads and writes config, loading, error, interfaces state via atoms.
+  - Uses utility functions for parsing URL parameters and interface options.
+  - Renders the code editor and preview panels side by side using Tailwind CSS for layout.
+
+### 2. `PlaygroundPreview`
+- **Location:** `src/components/PlaygroundPreview.tsx`
+- **Role:** Renders the live LabelStudio preview panel.
+  - Receives all state as props (from atoms in PlaygroundApp).
+  - Dynamically loads the `@humansignal/editor` package and instantiates a LabelStudio instance with the current config and interface options.
+  - Handles cleanup of the LabelStudio instance on config/interface changes or unmount.
+  - Observes MST annotation changes and updates a Jotai atom or local state with the serialized annotation JSON, which is displayed below the preview.
+  - Displays loading and error states using Tailwind classes.
+
+### 3. `main.tsx`
+- **Role:** Entry point. Mounts the `PlaygroundApp` to the DOM.
+
+## State Management
+- All application state (config, loading, error, interfaces, annotation, sample task) is managed using Jotai atoms, defined in `src/atoms/configAtoms.ts`.
+- Components use the `useAtom` hook to read and write state.
+- This ensures a strict separation of state logic from UI, and enables easy extension and testing.
+
+## Utility Functions
+- All logic for parsing URL parameters and interface options is placed in strict utility functions in `src/utils/query.ts`.
+- Sample data generation is handled in `src/utils/generateSampleTask.ts`.
+- Components import and use these utilities for all non-UI logic.
+
+## Data Flow
+- On load, `PlaygroundApp` uses utility functions to parse URL parameters:
+  - `?config` (base64-encoded XML config)
+  - `?configUrl` (URL to fetch XML config)
+  - `?interfaces` (comma-separated list of LabelStudio interface options)
+- The config, loading, error, interfaces, annotation, and sample task state are set via Jotai atoms.
+- The code editor is a controlled component, updating the config atom on change.
+- The preview panel receives the current config and interface options as props and re-renders the LabelStudio instance accordingly.
+- Annotation changes in the preview are observed and the serialized annotation is displayed live below the preview.
+
+## MobX State Tree (MST) Integration
+- All MST model mutations (including cleanup) are performed via MST actions to avoid protection errors.
+- The annotation model includes a `cleanup` action for safe teardown, which is called from React cleanup.
+- Only plain objects (not MST models) are stored in React state or Jotai atoms.
+
+## Underlying Libraries
+
+### React
+- The app is built with React (function components, hooks, strict mode).
+- State and effects are managed with Jotai atoms and hooks.
+
+### Jotai
+- Used for all state management (config, loading, error, interfaces, annotation, sample task).
+- Atoms are defined in `src/atoms/configAtoms.ts`.
+- Components use `useAtom` for state access and updates.
+
+### Tailwind CSS
+- All layout, spacing, color, and typography is handled with Tailwind utility classes.
+- Only semantic and token-based Tailwind classes are used, following project rules.
+
+### @humansignal/ui
+- Provides the `CodeEditor` component for XML editing.
+- Ensures consistent UI and design token usage across the app.
+
+### @humansignal/editor
+- Provides the LabelStudio labeling interface for live preview.
+- Dynamically imported in the preview panel for performance and to avoid loading unnecessary code until needed.
+- The LabelStudio instance is created with the current config and interface options, and is destroyed/cleaned up on changes.
+
+## URL-based API
+- The app can be configured via URL parameters:
+  - `?config` (base64-encoded XML config string)
+  - `?configUrl` (URL to fetch XML config)
+  - `?interfaces` (comma-separated list of LabelStudio interface options)
+- This allows external documentation or apps to embed the playground with preloaded configs and custom preview options.
+
+## Embeddability
+- The app is fully responsive and designed to be embedded via iframe.
+- All UI is self-contained and does not require authentication or external state.
+
+## Extensibility
+- Components are split into single-file-per-component for maintainability, and all live under `src/components/`.
+- All state is managed via Jotai atoms in `src/atoms/`.
+- All logic is placed in strict utility functions in `src/utils/`.
+- The code editor and preview logic are decoupled, allowing for future enhancements (e.g., validation, additional preview options, custom data, etc).
+- The app can be extended to support more URL parameters, additional LabelStudio features, or integration with other HumanSignal libraries.
+- To add new sample data types, update `generateSampleTask.ts` with new logic and public domain URLs.
+- To customize annotation output, update the preview logic to observe and display additional MST state as needed.
+
+## Directory Structure
+
+```
+web/apps/playground/
+├── src/
+│   ├── atoms/           # Jotai atoms for state management
+│   ├── components/      # React components
+│   │   ├── BottomPanel/ # Data Input/Output Bottom panel component
+│   │   ├── EditorPanel/ # Labelling Config Editor panel component
+│   │   ├── PlaygroundApp/ # Main app component
+│   │   └── PreviewPanel/ # Labelling Preview panel component
+│   ├── utils/          # Utility functions
+│   ├── index.html      # Entry HTML file
+│   └── main.tsx        # Entry point
+├── .babelrc           # Babel configuration
+├── jest.config.ts     # Jest configuration
+├── project.json       # Nx project configuration
+├── tsconfig.json      # TypeScript configuration
+├── tsconfig.app.json  # App-specific TypeScript configuration
+└── tsconfig.spec.json # Test-specific TypeScript configuration
+```
+
+## Summary
+The Playground app is a modern, modular, and embeddable tool for experimenting with and sharing LabelStudio configs. It leverages the HumanSignal UI and editor libraries, is styled with Tailwind, uses Jotai for state, and is designed for easy integration into documentation and external web applications. It now features robust sample data generation, live annotation output, and safe MobX State Tree integration for a seamless developer experience.

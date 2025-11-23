@@ -1,0 +1,34 @@
+title: 基于内容的图像检索
+type: community
+group: 排名与评分
+image: /static/templates/content-based-image-search.png
+details: |
+  <h1>Select images related to the query image</h1>
+  <dl>
+    <dt>Industry Applications</dt>
+    <dd>e-commerce search, stock photo platforms, medical imaging, forensic analysis, art history research, fashion search, reverse image search, copyright detection, product discovery, visual shopping, museum collections, digital asset management</dd>
+    <dt>Associated Models</dt>
+    <dd>convolutional neural networks, CLIP, ResNet features</dd>
+    <dt>Domain Terminology</dt>
+    <dd>visual similarity, feature extraction, visual search, image similarity, perceptual hashing, visual features, image embeddings</dd>
+  </dl>
+config: |
+  <View>
+    <Image name="query" value="$query_image" />
+    <Header value="Choose similar images:" />
+    <View style="display: grid; column-gap: 8px; grid-template: auto/1fr 1fr 1fr">
+      <Image name="image1" value="$image1" />
+      <Image name="image2" value="$image2" />
+      <Image name="image3" value="$image3" />
+    </View>
+    <Choices name="similar" toName="query" required="true" choice="multiple">
+      <Choice value="One" />
+      <Choice value="Two" />
+      <Choice value="Three" />
+    </Choices>
+    <Style>
+      [dataneedsupdate]~div form {display: flex}
+      [dataneedsupdate]~div form>* {flex-grow:1;margin-left:8px}
+    </Style>
+  </View>
+

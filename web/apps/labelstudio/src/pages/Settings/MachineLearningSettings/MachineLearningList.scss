@@ -1,0 +1,38 @@
+.backend-card {
+  padding: 15px;
+  border-radius: var(--corner-radius-small);
+  background: var(--color-neutral-surface);
+  border: 1px solid var(--color-neutral-border);
+
+  &__title-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+  }
+
+  &__title {
+    margin-top: 15px;
+    margin-left: 2px;
+    font-weight: 500;
+    color: var(--color-neutral-content);
+  }
+
+  &__meta {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    gap: 20px;
+    color: var(--color-neutral-content-subtler);
+    margin-top: 5px;
+    margin-left: 2px;
+  }
+
+  &__group {
+    display: flex;
+    align-items: center;
+  }
+
+  &__menu {
+    align-items: top;
+  }
+}

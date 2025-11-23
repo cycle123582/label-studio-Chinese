@@ -1,0 +1,11 @@
+url: https://labelstud.io/
+
+theme_config:
+  tier: opensource
+  root_domain: "labelstud.io"
+
+# Deployment
+deploy:
+  type: aws-s3
+  region: us-east-1
+  bucket: labelstud.io

@@ -1,0 +1,30 @@
+title: 视频目标跟踪
+type: community
+group: 视频
+image: /static/templates/video-object-tracking.png
+details: |
+  <h1>Object tracking in video with bounding boxes</h1>
+  <dl>
+    <dt>Industry Applications</dt>
+    <dd>autonomous driving, surveillance systems, sports analytics, robotics, augmented reality, traffic monitoring, security cameras, wildlife tracking, retail analytics, medical imaging, motion analysis, behavior analysis, industrial automation, drone surveillance</dd>
+    <dt>Associated Models</dt>
+    <dd>SORT, DeepSORT, ByteTrack, FairMOT, CenterTrack, Kalman filter</dd>
+    <dt>Domain Terminology</dt>
+    <dd>multi-object tracking, MOT, object detection, temporal consistency, trajectory analysis</dd>
+  </dl>
+config: |
+  <View>
+     <Labels name="videoLabels" toName="video" allowEmpty="true">
+       <Label value="Man" background="blue"/>
+       <Label value="Woman" background="red"/>
+       <Label value="Other" background="green"/>
+     </Labels>
+     
+     <!-- Please specify FPS carefully, it will be used for all project videos -->
+     <Video name="video" value="$video" framerate="25.0"/>
+     <VideoRectangle name="box" toName="video" />
+  </View>
+
+  <!--{
+   "video": "/static/samples/opossum_snow.mp4"
+  }-->

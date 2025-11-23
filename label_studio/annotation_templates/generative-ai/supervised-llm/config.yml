@@ -1,0 +1,82 @@
+title: 有监督语言模型微调
+type: community
+group: 生成式人工智能
+order: 1
+image: /static/templates/generative-supervised-llm.png
+details: |
+  <h1>Create training data for supervised fine-tuning of language models</h1>
+  <dl>
+    <dt>Industry Applications</dt>
+    <dd>instruction fine-tuning, domain adaptation, task-specific LLM, enterprise AI customization, code generation models, medical AI, legal AI, customer service automation, educational AI, technical writing assistance, specialized chatbots, domain expertise</dd>
+    <dt>Associated Models</dt>
+    <dd>supervised fine-tuning, instruction following, prompt-response pairs, few-shot learning</dd>
+    <dt>Domain Terminology</dt>
+    <dd>gen AI, SFT, instruction tuning, model specialization, task adaptation, performance optimization</dd>
+  </dl>
+config: |
+  <View className="root">
+    <Style>
+    .root {
+      font-family: 'Roboto', sans-serif;
+      line-height: 1.6;
+      background-color: #f0f0f0;
+    }
+    .container {
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+    }
+    .prompt {
+      padding: 20px;
+      background-color: #0084ff;
+      color: #ffffff;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.1);
+    }
+    .answer-input {
+      flex-basis: 49%;
+      padding: 20px;
+      background-color: rgba(44, 62, 80, 0.9);
+      color: #ffffff;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.1);
+      width: 100%;
+      border: none;
+      font-family: 'Roboto', sans-serif;
+      font-size: 16px;
+      outline: none;
+    }
+    .answer-input:focus {
+      outline: none;
+    }
+    .answer-input:hover {
+      background-color: rgba(52, 73, 94, 0.9);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .lsf-richtext__line:hover {
+      background: unset;
+    }
+    </Style>
+    <View className="container">
+      <View className="prompt">
+        <Text name="prompt" value="$prompt" />
+      </View>
+      <View className="answer-input">
+        <TextArea name="instruction" toName="prompt"
+                  maxSubmissions="1" required="true"
+                  requiredMessage="You must provide the response to the prompt"
+                  placeholder="Type your answer here..."
+                  rows="10"
+        />
+      </View>
+    </View>
+  </View>
+  
+  <!-- {"data" : {
+    "prompt": "Generate a Python function that takes a list of integers as input and returns the sum of all even numbers in the list."
+  }}
+  -->

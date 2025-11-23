@@ -1,0 +1,35 @@
+name: "/fmt command"
+
+on:
+  repository_dispatch:
+    types: [ fmt-command ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.client_payload.github.payload.issue.number }}-${{ github.event.client_payload.slash_command.command }}-${{ github.event.client_payload.slash_command.args.unnamed.arg1 || github.event.client_payload.slash_command.args.all }}
+
+jobs:
+  apply-linters:
+    name: "Apply linters"
+    if: github.event.client_payload.slash_command.args.unnamed.arg1 == ''
+    uses: ./.github/workflows/apply-linters.yml
+    with:
+      branch_name: ${{ github.event.client_payload.slash_command.args.unnamed.arg2 || github.event.client_payload.pull_request.head.ref }}
+    secrets: inherit
+
+  help:
+    if: ${{ github.event.client_payload.slash_command.args.unnamed.arg1 == 'help' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - name: Update comment
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          token: ${{ secrets.GIT_PAT }}
+          repository: ${{ github.event.client_payload.github.payload.repository.full_name }}
+          comment-id: ${{ github.event.client_payload.github.payload.comment.id }}
+          body: |
+            > Command | Description
+            > --- | ---
+            > /fmt | Apply linters to the current PR branch
+            > /fmt help | Show this message
+          reactions: hooray
