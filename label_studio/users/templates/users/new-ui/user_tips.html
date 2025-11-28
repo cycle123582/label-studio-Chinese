@@ -4,20 +4,22 @@
 
   const SERVER_ID = {{ request.server_id|json_dumps_ensure_ascii|safe }};
   const EVENT_NAMESPACE_KEY = "heidi_tips";
-  const CACHE_KEY = "heidi_live_tips_collection";
+  // 修改了缓存Key，防止浏览器读取旧的英文缓存
+  const CACHE_KEY = "heidi_live_tips_collection_cn_v1";
   const CACHE_FETCHED_AT_KEY = "heidi_live_tips_collection_fetched_at";
   const CACHE_STALE_TIME = 1000 * 60 * 60; // 1 hour
   const MAX_TIMEOUT = 5000; // 5 seconds
   const TIP_COLLECTION_NAME = "authPage";
 
+  // 这里是核心汉化部分
   const defaultTipsCollection = {
     authPage: [
       {
-        title: "Did you know?",
+        title: "你知道吗？",
         description:
-          "You can sync data from all popular cloud storage providers to collect new items for labeling as they are uploaded, and return the annotation results to train and continuously improve models.",
+          "您可以同步来自主流云存储提供商的数据，在上传时自动收集新项目进行标注，并返回标注结果以训练和持续改进模型。",
         link: {
-          label: "Learn more",
+          label: "了解更多",
           url: "https://labelstud.io/guide/storage",
           params: {
             experiment: "login_revamp",
@@ -26,11 +28,11 @@
         },
       },
       {
-        title: "Did you know?",
+        title: "你知道吗？",
         description:
-          "There's an Enterprise version of Label Studio packed with more features and automation to label data faster while ensuring the highest quality.",
+          "Label Studio 企业版拥有更多功能和自动化工具，可以更快速地标注数据，同时确保最高质量。",
         link: {
-          label: "Learn more",
+          label: "了解更多",
           url: "https://humansignal.com/goenterprise/",
           params: {
             experiment: "login_revamp",
@@ -39,11 +41,11 @@
         },
       },
       {
-        title: "Did you know?",
+        title: "你知道吗？",
         description:
-          "Label Studio has dozens of pre-built templates for all data types you can use to configure your labeling UI, from image classification to sentiment analysis to supervised LLM fine-tuning. ",
+          "Label Studio 拥有数十种针对各类数据类型的预构建模板，从图像分类到情感分析，再到大模型微调(LLM Fine-tuning)，您都可以直接使用。",
         link: {
-          label: "See all templates",
+          label: "查看所有模板",
           url: "https://labelstud.io/templates",
           params: {
             experiment: "login_revamp",
@@ -52,10 +54,10 @@
         },
       },
       {
-        title: "Did you know?",
-        description: "Label Studio now has a Starter Cloud offering optimized for small teams and projects.",
+        title: "你知道吗？",
+        description: "Label Studio 现已推出针对小型团队和项目优化的 Starter Cloud 服务。",
         link: {
-          label: "Learn more",
+          label: "了解更多",
           url: "https://humansignal.com/pricing/",
           params: {
             experiment: "login_revamp",
@@ -79,21 +81,22 @@
   }
 
   const loadLiveTipsCollection = () => {
-    // stale while revalidate - we will return the data present in the cache or the default data and fetch updated data to be put into the cache for the next time this function is called without waiting for the promise.
+    // 强制直接返回本地汉化内容，不再去请求远程的英文内容
+    // 如果你希望保留远程更新功能（可能是英文），请删除下面这一行 return defaultTipsCollection;
+    return defaultTipsCollection;
+
+    /* 下面的远程获取逻辑已屏蔽，以确保显示中文 */
+    /*
     const cachedData = localStorage.getItem(CACHE_KEY);
     const fetchedAt = localStorage.getItem(CACHE_FETCHED_AT_KEY);
 
-    // Read from local storage if the cachedData is less than CACHE_STALE_TIME milliseconds old
     if (cachedData && fetchedAt && Date.now() - Number.parseInt(fetchedAt) < CACHE_STALE_TIME) {
       return JSON.parse(cachedData);
     }
 
     const abortController = new AbortController();
-
-    // Abort the request after MAX_TIMEOUT milliseconds to ensure we won't wait for too long, something might be wrong with the network or it could be an air-gapped instance
     const abortTimeout = setTimeout(abortController.abort, MAX_TIMEOUT);
 
-    // Fetch from github raw liveContent.json proxied through the server
     fetch("/heidi-tips", {
       headers: {
         "Cache-Control": "no-cache",
@@ -104,8 +107,6 @@
       .then(async (response) => {
         if (response.ok) {
           const data = await response.json();
-
-          // Cache the fetched content
           localStorage.setItem(CACHE_FETCHED_AT_KEY, String(Date.now()));
           localStorage.setItem(CACHE_KEY, JSON.stringify(data));
         }
@@ -114,18 +115,14 @@
         console.warn("Failed to load live Heidi tips collection", e);
       })
       .finally(() => {
-        // Wait until the content is fetched to clear the abort timeout
-        // The abort should consider the entire request not just the headers
         clearTimeout(abortTimeout);
       });
 
-    // Serve possibly stale cached content
     if (cachedData) {
       return JSON.parse(cachedData);
     }
-
-    // Default local content
     return defaultTipsCollection;
+    */
   };
 
   function getRandomTip() {
@@ -159,7 +156,6 @@
   }
 
   function getTipMetadata(tip) {
-    // Everything except the experiment and treatment params as those are part of the event name
     const { experiment, treatment, ...rest } = tip.link.params ?? {};
     return {
       ...rest,
@@ -177,15 +173,11 @@
 
     const selectedTip = getRandomTip();
     if (!selectedTip) {
-      // Remove the tips container if there are no tips to show
       _container.remove();
       return;
     }
 
-    // Add the click handler to all links inside the tips container that have the data-heidi-tip-link attribute
-    // In the future if there are more than one tip, we will need to check which tip was clicked
     _container.addEventListener('click', (event) => {
-      // If the clicked element is the link, log the click
       if (event.target.hasAttribute('data-heidi-tip-link')) {
         __lsa(getTipEvent(TIP_COLLECTION_NAME, selectedTip, 'click'), getTipMetadata(selectedTip));
       }

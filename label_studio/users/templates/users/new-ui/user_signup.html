@@ -15,14 +15,16 @@
 
 {% block user_content %}
   <div class="form-wrapper">
-    <h2>Sign Up</h2>
+    <!-- 1. 标题汉化 -->
+    <h2>注册新账号</h2>
     <form id="signup-form"
         action="{% url 'user-signup' %}?next={{ next }}{% if token %}&token={{ token }}{% endif %}"
         method="post"
     >
     {% csrf_token %}
       <div class="input-wrapper">
-        <label>Email Address</label>
+        <!-- 2. 邮箱标签汉化 -->
+        <label>邮箱地址</label>
         <input type="text" class="lsf-input-ls" name="email" id="email" value="{{ user_form.data.email }}">
         {% if user_form.errors.email %}
           <ul class="field_errors">
@@ -33,7 +35,8 @@
         {% endif %}
         </div>
       <div class="input-wrapper">
-        <label>Password</label>
+        <!-- 3. 密码标签汉化 -->
+        <label>密码</label>
         <input type="password" class="lsf-input-ls" name="password" id="password">
         {% if user_form.errors.password %}
           <ul class="field_errors">
@@ -44,16 +47,20 @@
         {% endif %}
       </div>
       <div class="input-wrapper">
-        <label>How did you hear about Label Studio?</label>
+        <!-- 4. 调查问卷汉化 -->
+        <label>您是如何知晓 Label Studio 的？</label>
         <select class="lsf-select-ls" name="how_find_us" id="how_find_us">
-          <option disabled value="" {% if not form.data.how_find_us %}selected{% endif %}>Select an option</option>
+          <!-- 默认选项汉化 -->
+          <option disabled value="" {% if not form.data.how_find_us %}selected{% endif %}>请选择...</option>
           {% for choice in found_us_options %}
+            <!-- 注意：这里的选项内容 choice.1 来自后端，如果是英文，前端改不了，需要改后端代码 -->
             <option value="{{ choice.1 }}" {% if choice.1 == user_form.data.how_find_us %}selected{% endif %}>{{ choice.1 }}</option>
           {% endfor %}
         </select>
       </div>
-      <div class="input-wrapper" id="elaborateContainer" {% if user_form.data.how_find_us != elaborate %}style="display:none;"{% endif %}> 
-        <label>Please elaborate</label>
+      <div class="input-wrapper" id="elaborateContainer" {% if user_form.data.how_find_us != elaborate %}style="display:none;"{% endif %}>
+        <!-- 5. 详细说明汉化 -->
+        <label>请详细说明</label>
         <input class="lsf-input-ls" name="elaborate" id="elaborate" {% if user_form.data.how_find_us == elaborate %}value="{{ user_form.data.elaborate }}"{% endif %}>
         </select>
       </div>
@@ -62,8 +69,9 @@
         <input name="allow_newsletters_visual" id="allow_newsletters_visual" class="lsf-checkbox-ls"
                 type="checkbox" style="width: auto" {% if user_form.data.allow_newsletters == 'false' %}{% else %}checked="checked{% endif %}"
                 onchange="document.getElementById('allow_newsletters').value=document.getElementById('allow_newsletters_visual').checked">
+        <!-- 6. 订阅消息汉化 -->
         <label for="allow_newsletters_visual" style="display: inline-block; cursor: pointer;">
-          Get the latest news from Heidi
+          订阅来自 Heidi 的最新动态
           <img src="{{ settings.HOSTNAME }}{% static 'images/heidi.png' %}" alt="Heidi"
               width="25" style="position: absolute; right: -2.5em; top: -.25rem;">
         </label>
@@ -76,12 +84,14 @@
           </p>
         {% endfor %}
       {% endif %}
-      <p><button type="submit" aria-label="Create Account" class="lsf-button-ls lsf-button-ls_look_primary">Create Account</button></p>
+      <!-- 7. 提交按钮汉化 -->
+      <p><button type="submit" aria-label="Create Account" class="lsf-button-ls lsf-button-ls_look_primary">创建账号</button></p>
     </form>
   </div>
   <div class="text-wrapper">
-    <p class="">Already have an account?</p>
-    <a href="{% url 'user-login' %}{% querystring %}">Log in</a>
+    <!-- 8. 底部登录链接汉化 -->
+    <p class="">已有账号？</p>
+    <a href="{% url 'user-login' %}{% querystring %}">立即登录</a>
   </div>
   <script>
     document.querySelector("#how_find_us").addEventListener('change', function(e) {
