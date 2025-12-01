@@ -18,27 +18,30 @@ logger = logging.getLogger(__name__)
 def get_client_and_resource(
     aws_access_key_id=None, aws_secret_access_key=None, aws_session_token=None, region_name=None, s3_endpoint=None
 ):
-    aws_access_key_id = aws_access_key_id or get_env('AWS_ACCESS_KEY_ID')
-    aws_secret_access_key = aws_secret_access_key or get_env('AWS_SECRET_ACCESS_KEY')
-    aws_session_token = aws_session_token or get_env('AWS_SESSION_TOKEN')
+    aws_access_key_id = aws_access_key_id
+    aws_secret_access_key = aws_secret_access_key
+    aws_session_token = aws_session_token
     logger.debug(
         f'Create boto3 session with '
         f'access key id={aws_access_key_id}, '
         f'secret key={aws_secret_access_key[:4] + "..." if aws_secret_access_key else None}, '
         f'session token={aws_session_token}'
     )
-    session = boto3.Session(
+    s3 = boto3.client(
+        's3',
         aws_access_key_id=aws_access_key_id,
         aws_secret_access_key=aws_secret_access_key,
-        aws_session_token=aws_session_token,
-    )
-    settings = {'region_name': region_name or get_env('S3_region') or 'us-east-1'}
-    s3_endpoint = s3_endpoint or get_env('S3_ENDPOINT')
-    if s3_endpoint:
-        settings['endpoint_url'] = s3_endpoint
-    client = session.client('s3', config=boto3.session.Config(signature_version='s3v4'), **settings)
-    resource = session.resource('s3', config=boto3.session.Config(signature_version='s3v4'), **settings)
-    return client, resource
+        endpoint_url=s3_endpoint,
+        config=Config(s3={"addressing_style": "virtual"},
+                      signature_version='v4'))
+    res = boto3.resource(
+        's3',
+        aws_access_key_id=aws_access_key_id,
+        aws_secret_access_key=aws_secret_access_key,
+        endpoint_url=s3_endpoint,
+        config=Config(s3={"addressing_style": "virtual"},
+                      signature_version='v4'))
+    return s3, res
 
 
 def resolve_s3_url(url, client, presign=True, expires_in=3600):
